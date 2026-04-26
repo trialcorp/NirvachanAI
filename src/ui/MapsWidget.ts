@@ -10,6 +10,7 @@
 import { ElectionMapsService } from '../services/maps';
 import { escapeHtml, sanitizeFull } from '../utils/sanitize';
 import { announce } from '../utils/a11y';
+import { StatusFeedback } from '../utils/StatusFeedback';
 
 /**
  * Maps-based polling location finder widget.
@@ -136,6 +137,10 @@ export class MapsWidget {
 
     results.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: var(--space-4);">🔍 Searching for polling locations...</p>';
     announce('Searching for polling locations near ' + sanitised);
+
+    if (!this.maps.isConfigured()) {
+      StatusFeedback.showConfigWarning('Google Maps API');
+    }
 
     const response = await this.maps.searchPollingLocations(sanitised);
 

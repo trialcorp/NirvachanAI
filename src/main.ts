@@ -23,6 +23,7 @@ import { CalendarWidget } from './ui/CalendarWidget';
 import { EligibilityCheckerWidget } from './ui/EligibilityCheckerWidget';
 import { ElectionAnalyticsService } from './services/analytics';
 import { ElectionVertexService } from './services/vertex';
+import { StatusFeedback } from './utils/StatusFeedback';
 import { store } from './state/store';
 import { announce, onReducedMotionChange, prefersReducedMotion } from './utils/a11y';
 
@@ -122,7 +123,14 @@ function initCloudServices(): void {
     const vertex = new ElectionVertexService();
     if (vertex.isConfigured()) {
       // eslint-disable-next-line no-console
-      console.info('[ElectionSaathi] Vertex AI text-embedding service active.');
+      console.info('[NirvachanAI] Vertex AI text-embedding service active.');
+    } else {
+      // Search fallback notice
+      document.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+          StatusFeedback.showConfigWarning('Google Vertex AI');
+        }
+      });
     }
   } catch (e) {
     // eslint-disable-next-line no-console

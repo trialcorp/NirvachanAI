@@ -13,6 +13,7 @@
 
 import { ElectionTranslationService, SUPPORTED_LANGUAGES } from '../services/translation';
 import { announce } from '../utils/a11y';
+import { StatusFeedback } from '../utils/StatusFeedback';
 
 /** Maximum strings per batch request to the Translation API. */
 const BATCH_SIZE = 50;
@@ -105,6 +106,14 @@ export class TranslationWidget {
    */
   private async handleTranslation(targetLang: string): Promise<void> {
     if (this.currentLang === targetLang) {
+      return;
+    }
+
+    if (!this.service.isConfigured() && targetLang !== 'en') {
+      StatusFeedback.showConfigWarning('Google Cloud Translation API');
+      // Reset selector to English
+      const select = document.getElementById('lang-select') as HTMLSelectElement | null;
+      if (select) select.value = 'en';
       return;
     }
 
