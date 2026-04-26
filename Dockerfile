@@ -5,9 +5,21 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --prefer-offline
 
-# Copy source and build
+# Copy source
 COPY . .
-RUN npm run build
+
+# Set build arguments for Vite
+ARG VITE_GEMINI_API_KEY
+ARG VITE_GOOGLE_MAPS_API_KEY
+ARG VITE_GOOGLE_TRANSLATION_API_KEY
+ARG VITE_APP_ENV=production
+
+# Run build with env vars available
+RUN VITE_GEMINI_API_KEY=$VITE_GEMINI_API_KEY \
+    VITE_GOOGLE_MAPS_API_KEY=$VITE_GOOGLE_MAPS_API_KEY \
+    VITE_GOOGLE_TRANSLATION_API_KEY=$VITE_GOOGLE_TRANSLATION_API_KEY \
+    VITE_APP_ENV=$VITE_APP_ENV \
+    npm run build
 
 # ---- Production stage: nginx with security hardening ----
 FROM nginx:1.27-alpine AS production

@@ -12,9 +12,16 @@ steps:
     id: 'validate'
     waitFor: ['install']
 
-  # Step 3: Build the production container
+  # Step 3: Build the production container with build arguments
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/nirvachan-ai:$COMMIT_SHA', '.']
+    args: [
+      'build', 
+      '-t', 'gcr.io/$PROJECT_ID/nirvachan-ai:$COMMIT_SHA',
+      '--build-arg', 'VITE_GEMINI_API_KEY=$_GEMINI_API_KEY',
+      '--build-arg', 'VITE_GOOGLE_MAPS_API_KEY=$_MAPS_API_KEY',
+      '--build-arg', 'VITE_GOOGLE_TRANSLATION_API_KEY=$_TRANSLATION_API_KEY',
+      '.'
+    ]
     id: 'build-image'
     waitFor: ['validate']
 
