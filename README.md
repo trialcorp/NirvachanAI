@@ -177,7 +177,22 @@ tests/
    ```bash
    npm run dev
    ```
-   The app opens at `http://localhost:3000`.
+    The app opens at `http://localhost:3000`.
+
+### Deployment (Google Cloud Build)
+
+The project includes a `cloudbuild.yaml` for automated deployment to Cloud Run. To ensure AI and Translation features work in production, you **must** set the following **Substitutions** in your Cloud Build Trigger:
+
+| Variable | Description |
+|---|---|
+| `_GEMINI_API_KEY` | Your Google Gemini API Key |
+| `_MAPS_API_KEY` | Your Google Maps JavaScript API Key |
+| `_TRANSLATION_API_KEY` | Your Google Cloud Translation API Key |
+
+1. Go to **Cloud Build → Triggers** in the GCP Console.
+2. Edit your trigger and scroll to **Substitutions**.
+3. Add the three keys above with their respective values.
+4. Run the trigger to redeploy with the keys embedded.
 
 ### Troubleshooting
 
