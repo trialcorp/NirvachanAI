@@ -7,7 +7,9 @@
  * @module data/timeline
  */
 
-import { ElectionCategory, TimelineEvent, TimelinePriority } from '../types/index';
+import { ElectionCategory } from '../types/index';
+import type { TimelineEvent } from '../types/index';
+import { TimelinePriority } from '../types/index';
 
 /**
  * Generic election process milestones applicable to most Indian elections.
@@ -56,7 +58,8 @@ export const ELECTION_PROCESS_MILESTONES: readonly TimelineEvent[] = [
     electionCategory: ElectionCategory.LOK_SABHA,
     priority: TimelinePriority.MEDIUM,
     isDeadline: false,
-    reminderText: 'Nomination scrutiny underway. Check if your constituency candidates are finalised.',
+    reminderText:
+      'Nomination scrutiny underway. Check if your constituency candidates are finalised.',
   },
   {
     id: 'milestone-withdrawal',
@@ -129,7 +132,8 @@ export const UPCOMING_ELECTION_EVENTS: readonly TimelineEvent[] = [
     electionCategory: ElectionCategory.LOK_SABHA,
     priority: TimelinePriority.CRITICAL,
     isDeadline: true,
-    reminderText: 'Voter registration drive! Register or update your voter details before the deadline.',
+    reminderText:
+      'Voter registration drive! Register or update your voter details before the deadline.',
   },
   {
     id: 'state-assembly-2026',
@@ -151,7 +155,8 @@ export const UPCOMING_ELECTION_EVENTS: readonly TimelineEvent[] = [
     electionCategory: ElectionCategory.PANCHAYAT,
     priority: TimelinePriority.HIGH,
     isDeadline: false,
-    reminderText: 'Panchayat elections in your state may be upcoming. Verify dates with your State Election Commission.',
+    reminderText:
+      'Panchayat elections in your state may be upcoming. Verify dates with your State Election Commission.',
   },
   {
     id: 'municipal-elections-2026',
@@ -162,18 +167,20 @@ export const UPCOMING_ELECTION_EVENTS: readonly TimelineEvent[] = [
     electionCategory: ElectionCategory.MUNICIPAL,
     priority: TimelinePriority.MEDIUM,
     isDeadline: false,
-    reminderText: 'Municipal elections may be scheduled in your city. Check with your local election office.',
+    reminderText:
+      'Municipal elections may be scheduled in your city. Check with your local election office.',
   },
   {
     id: 'national-voters-day-2026',
-    title: 'National Voters\' Day',
+    title: "National Voters' Day",
     description:
-      'Celebrated on January 25 every year (anniversary of the ECI\'s founding in 1950). New voters are felicitated and encouraged to participate in democracy.',
+      "Celebrated on January 25 every year (anniversary of the ECI's founding in 1950). New voters are felicitated and encouraged to participate in democracy.",
     date: '2026-01-25',
     electionCategory: ElectionCategory.LOK_SABHA,
     priority: TimelinePriority.LOW,
     isDeadline: false,
-    reminderText: 'Happy National Voters\' Day! Celebrate democracy and encourage new voter registration.',
+    reminderText:
+      "Happy National Voters' Day! Celebrate democracy and encourage new voter registration.",
   },
 ] as const;
 
@@ -201,9 +208,7 @@ export function getAllTimelineEvents(): readonly TimelineEvent[] {
  * @param category - The election category to filter by.
  * @returns Matching timeline events.
  */
-export function getTimelineByCategory(
-  category: ElectionCategory,
-): readonly TimelineEvent[] {
+export function getTimelineByCategory(category: ElectionCategory): readonly TimelineEvent[] {
   return [...ELECTION_PROCESS_MILESTONES, ...UPCOMING_ELECTION_EVENTS].filter(
     (e) => e.electionCategory === category,
   );
@@ -215,7 +220,5 @@ export function getTimelineByCategory(
  * @returns Timeline events that are marked as deadlines.
  */
 export function getDeadlineEvents(): readonly TimelineEvent[] {
-  return [...ELECTION_PROCESS_MILESTONES, ...UPCOMING_ELECTION_EVENTS].filter(
-    (e) => e.isDeadline,
-  );
+  return [...ELECTION_PROCESS_MILESTONES, ...UPCOMING_ELECTION_EVENTS].filter((e) => e.isDeadline);
 }

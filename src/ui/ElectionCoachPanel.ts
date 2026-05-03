@@ -54,7 +54,7 @@ export class ElectionCoachPanel {
       // Search fallback notice
       document.addEventListener('keydown', (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-           StatusFeedback.showConfigWarning('Google Vertex AI');
+          StatusFeedback.showConfigWarning('Google Vertex AI');
         }
       });
     }
@@ -107,7 +107,8 @@ export class ElectionCoachPanel {
 
     const welcomeText = document.createElement('p');
     welcomeText.className = 'coach-text';
-    welcomeText.textContent = "Namaste! I'm your Election Assistant. Ask me anything about Indian elections — eligibility, registration, EVMs, polling booths, or any election type. How can I help you today?";
+    welcomeText.textContent =
+      "Namaste! I'm your Election Assistant. Ask me anything about Indian elections — eligibility, registration, EVMs, polling booths, or any election type. How can I help you today?";
     welcomeMsg.appendChild(welcomeText);
     messagesDiv.appendChild(welcomeMsg);
 

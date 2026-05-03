@@ -140,7 +140,8 @@ describe('ELECTION_TOOLS', () => {
   it('includes timeline tool', () => {
     const found = ELECTION_TOOLS.find((t) => t.name === 'get_election_timeline');
     expect(found).toBeDefined();
-    expect(found?.parameters.properties['election_type'].enum).toContain('LOK_SABHA');
+    const props = found?.parameters.properties as Record<string, any>;
+    expect(props['election_type'].enum).toContain('LOK_SABHA');
   });
 });
 

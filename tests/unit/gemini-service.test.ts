@@ -69,7 +69,8 @@ describe('ElectionCoachService', () => {
     it('should include get_election_timeline tool with enum', () => {
       const tool = ELECTION_TOOLS.find((t) => t.name === 'get_election_timeline');
       expect(tool).toBeDefined();
-      const electionType = tool!.parameters.properties.election_type;
+      const props = tool!.parameters.properties as Record<string, any>;
+      const electionType = props['election_type'];
       expect(electionType.enum).toContain('LOK_SABHA');
       expect(electionType.enum).toContain('PANCHAYAT');
     });

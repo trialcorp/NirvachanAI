@@ -97,7 +97,7 @@ const ELECTION_FAQ_CORPUS: readonly { question: string; answer: string }[] = [
   {
     question: 'What are Lok Sabha elections?',
     answer:
-      'Lok Sabha is the lower house of India\'s Parliament with 543 directly elected seats. Members are chosen through First Past the Post voting for a 5-year term. The majority party\'s leader becomes Prime Minister.',
+      "Lok Sabha is the lower house of India's Parliament with 543 directly elected seats. Members are chosen through First Past the Post voting for a 5-year term. The majority party's leader becomes Prime Minister.",
   },
   {
     question: 'How do Panchayat elections work?',
@@ -109,45 +109,141 @@ const ELECTION_FAQ_CORPUS: readonly { question: string; answer: string }[] = [
     answer:
       'The ECI accepts 12 photo ID proofs including EPIC/Voter ID, Aadhaar, Passport, Driving Licence, PAN Card, Service ID, Bank Passbook with Photo, MNREGA Job Card, Health Insurance Smart Card, Pension Document, NPR Smart Card, and official ID from MP/MLA/MLC.',
   },
-  { question: 'What is the Model Code of Conduct?', answer: 'Guidelines for parties/candidates during elections to ensure fairness.' },
-  { question: 'Who are Star Campaigners?', answer: 'Nominated party leaders whose travel expenses are not added to candidate limits.' },
-  { question: 'Is voter slip enough to vote?', answer: 'No, you must carry an approved photo ID like Aadhaar or EPIC.' },
-  { question: 'What to do if Voter ID is lost?', answer: 'Apply for a replacement online or use another approved ID if registered.' },
-  { question: 'What is the spending limit for MPs?', answer: 'Up to ₹95 lakh for Lok Sabha in larger states.' },
-  { question: 'What is a Tendered Vote?', answer: 'A vote cast on paper if someone else already voted in your name.' },
-  { question: 'What is a Challenged Vote?', answer: 'A vote challenged by an agent; decided by the Presiding Officer.' },
-  { question: 'Are exit polls allowed?', answer: 'Banned until the last phase of voting concludes in all states.' },
-  { question: 'Where to check real-time turnout?', answer: 'Use the official Voter Turnout App by the ECI.' },
-  { question: 'Does EVM have Braille?', answer: 'Yes, for visually impaired voters on the right side of buttons.' },
-  { question: 'Can I take a companion to vote?', answer: 'Yes, if you are blind or infirm, with a secrecy declaration.' },
-  { question: 'What is the 1950 helpline?', answer: 'Toll-free National Voter Helpline for all election queries.' },
-  { question: 'How do polling staff vote?', answer: 'Using Election Duty Certificates or Postal Ballots.' },
+  {
+    question: 'What is the Model Code of Conduct?',
+    answer: 'Guidelines for parties/candidates during elections to ensure fairness.',
+  },
+  {
+    question: 'Who are Star Campaigners?',
+    answer: 'Nominated party leaders whose travel expenses are not added to candidate limits.',
+  },
+  {
+    question: 'Is voter slip enough to vote?',
+    answer: 'No, you must carry an approved photo ID like Aadhaar or EPIC.',
+  },
+  {
+    question: 'What to do if Voter ID is lost?',
+    answer: 'Apply for a replacement online or use another approved ID if registered.',
+  },
+  {
+    question: 'What is the spending limit for MPs?',
+    answer: 'Up to ₹95 lakh for Lok Sabha in larger states.',
+  },
+  {
+    question: 'What is a Tendered Vote?',
+    answer: 'A vote cast on paper if someone else already voted in your name.',
+  },
+  {
+    question: 'What is a Challenged Vote?',
+    answer: 'A vote challenged by an agent; decided by the Presiding Officer.',
+  },
+  {
+    question: 'Are exit polls allowed?',
+    answer: 'Banned until the last phase of voting concludes in all states.',
+  },
+  {
+    question: 'Where to check real-time turnout?',
+    answer: 'Use the official Voter Turnout App by the ECI.',
+  },
+  {
+    question: 'Does EVM have Braille?',
+    answer: 'Yes, for visually impaired voters on the right side of buttons.',
+  },
+  {
+    question: 'Can I take a companion to vote?',
+    answer: 'Yes, if you are blind or infirm, with a secrecy declaration.',
+  },
+  {
+    question: 'What is the 1950 helpline?',
+    answer: 'Toll-free National Voter Helpline for all election queries.',
+  },
+  {
+    question: 'How do polling staff vote?',
+    answer: 'Using Election Duty Certificates or Postal Ballots.',
+  },
   { question: 'How do NRIs register?', answer: 'Online using Form 6A on the NVSP portal.' },
-  { question: 'Qualification to be an MP?', answer: 'Citizen, 25+ years old (Lok Sabha), registered voter.' },
-  { question: 'Can I ask for a recount?', answer: 'Yes, written request to the RO before results are declared.' },
-  { question: 'How are symbols allotted?', answer: 'Reserved for recognized parties; free symbols for others.' },
+  {
+    question: 'Qualification to be an MP?',
+    answer: 'Citizen, 25+ years old (Lok Sabha), registered voter.',
+  },
+  {
+    question: 'Can I ask for a recount?',
+    answer: 'Yes, written request to the RO before results are declared.',
+  },
+  {
+    question: 'How are symbols allotted?',
+    answer: 'Reserved for recognized parties; free symbols for others.',
+  },
   { question: 'How to correct Voter ID?', answer: 'Use Form 8 on NVSP for any entry corrections.' },
-  { question: 'Who is a BLO?', answer: 'Booth Level Officer responsible for local electoral roll maintenance.' },
-  { question: 'Can I vote online?', answer: 'No, but service voters use ETPBS; others must visit the booth.' },
+  {
+    question: 'Who is a BLO?',
+    answer: 'Booth Level Officer responsible for local electoral roll maintenance.',
+  },
+  {
+    question: 'Can I vote online?',
+    answer: 'No, but service voters use ETPBS; others must visit the booth.',
+  },
   { question: 'What is cVIGIL app?', answer: 'App to report Model Code violations in real-time.' },
-  { question: 'How to transfer Voter ID?', answer: 'Use Form 8 (Shifting) to move registration to a new city.' },
-  { question: 'Who can use proxy voting?', answer: 'Only Classified Service Voters (Armed Forces).' },
-  { question: 'What is Delimitation?', answer: 'Redrawing constituency boundaries based on population.' },
+  {
+    question: 'How to transfer Voter ID?',
+    answer: 'Use Form 8 (Shifting) to move registration to a new city.',
+  },
+  {
+    question: 'Who can use proxy voting?',
+    answer: 'Only Classified Service Voters (Armed Forces).',
+  },
+  {
+    question: 'What is Delimitation?',
+    answer: 'Redrawing constituency boundaries based on population.',
+  },
   { question: 'What are voting hours?', answer: 'Usually 7 AM to 6 PM; varies by region.' },
-  { question: 'Why use indelible ink?', answer: 'Visual proof of voting to prevent multiple votes.' },
-  { question: 'Vote without voter slip?', answer: 'Yes, if registered, using an approved photo ID.' },
-  { question: 'Where to see candidate records?', answer: 'Affidavits on ECI website or the KYC app.' },
+  {
+    question: 'Why use indelible ink?',
+    answer: 'Visual proof of voting to prevent multiple votes.',
+  },
+  {
+    question: 'Vote without voter slip?',
+    answer: 'Yes, if registered, using an approved photo ID.',
+  },
+  {
+    question: 'Where to see candidate records?',
+    answer: 'Affidavits on ECI website or the KYC app.',
+  },
   { question: 'Role of Presiding Officer?', answer: 'In charge of a single polling station.' },
-  { question: 'Role of Returning Officer?', answer: 'Responsible for conduct of elections in a constituency.' },
-  { question: 'Is DigiLocker Voter ID valid?', answer: 'Yes, e-EPIC on DigiLocker is a valid ID for voting.' },
+  {
+    question: 'Role of Returning Officer?',
+    answer: 'Responsible for conduct of elections in a constituency.',
+  },
+  {
+    question: 'Is DigiLocker Voter ID valid?',
+    answer: 'Yes, e-EPIC on DigiLocker is a valid ID for voting.',
+  },
   { question: 'Change Voter ID photo?', answer: 'Yes, via Form 8 on the NVSP portal.' },
-  { question: 'Is voting compulsory?', answer: 'No, it is a right but not a legal obligation in India.' },
+  {
+    question: 'Is voting compulsory?',
+    answer: 'No, it is a right but not a legal obligation in India.',
+  },
   { question: 'What is SVEEP?', answer: 'ECI program for voter education and awareness.' },
-  { question: 'What is the PVC Voter ID?', answer: 'High-security replacement for old paper voter cards.' },
-  { question: 'Who are Election Observers?', answer: 'Senior officials overseeing election fairness.' },
-  { question: 'Aadhaar-Voter ID link mandatory?', answer: 'No, it is voluntary for cleaning electoral rolls.' },
-  { question: 'What is a Test Vote?', answer: 'Verification vote if VVPAT claim is made; false claims lead to action.' },
-  { question: 'What is webcasting?', answer: 'Live monitoring of sensitive booths by election officials.' },
+  {
+    question: 'What is the PVC Voter ID?',
+    answer: 'High-security replacement for old paper voter cards.',
+  },
+  {
+    question: 'Who are Election Observers?',
+    answer: 'Senior officials overseeing election fairness.',
+  },
+  {
+    question: 'Aadhaar-Voter ID link mandatory?',
+    answer: 'No, it is voluntary for cleaning electoral rolls.',
+  },
+  {
+    question: 'What is a Test Vote?',
+    answer: 'Verification vote if VVPAT claim is made; false claims lead to action.',
+  },
+  {
+    question: 'What is webcasting?',
+    answer: 'Live monitoring of sensitive booths by election officials.',
+  },
 ];
 
 /** Keyword map for FAQ fallback: maps signal keywords to FAQ corpus index. */
@@ -156,7 +252,10 @@ const FAQ_KEYWORD_MAP: readonly { keywords: readonly string[]; index: number }[]
   { keywords: ['register', 'registration', 'form 6', 'enrol', 'nvsp'], index: 1 },
   { keywords: ['nota', 'none of the above', 'dissatisfaction'], index: 2 },
   { keywords: ['evm', 'vvpat', 'voting machine', 'electronic voting'], index: 3 },
-  { keywords: ['polling booth', 'booth', 'poll location', 'election office', 'voter slip'], index: 4 },
+  {
+    keywords: ['polling booth', 'booth', 'poll location', 'election office', 'voter slip'],
+    index: 4,
+  },
   { keywords: ['nri', 'overseas', 'non-resident', 'abroad'], index: 5 },
   { keywords: ['postal ballot', 'postal vote', 'etpbs', 'service voter'], index: 6 },
   { keywords: ['lok sabha', 'parliament', 'general election'], index: 7 },
@@ -176,8 +275,14 @@ const FAQ_KEYWORD_MAP: readonly { keywords: readonly string[]; index: number }[]
   { keywords: ['1950', 'helpline', 'toll free', 'call center'], index: 21 },
   { keywords: ['staff', 'duty', 'edc', 'polling official'], index: 22 },
   { keywords: ['nri', 'overseas', 'form 6a', 'passport'], index: 23 },
-  { keywords: ['qualification', 'candidate age', 'parliament member', 'lok sabha member'], index: 24 },
-  { keywords: ['recount votes', 'counting results', 'returning officer', 'election recount'], index: 25 },
+  {
+    keywords: ['qualification', 'candidate age', 'parliament member', 'lok sabha member'],
+    index: 24,
+  },
+  {
+    keywords: ['recount votes', 'counting results', 'returning officer', 'election recount'],
+    index: 25,
+  },
   { keywords: ['symbol', 'allotment', 'party logo', 'free symbol'], index: 26 },
   { keywords: ['correct', 'edit', 'form 8', 'errors'], index: 27 },
   { keywords: ['blo', 'booth level officer', 'teacher', 'local'], index: 28 },
@@ -227,9 +332,7 @@ export class ElectionVertexService {
    */
   constructor() {
     this.apiKey = String(
-      import.meta.env.VITE_GEMINI_API_KEY ||
-        import.meta.env.VITE_GEMINI_KEY ||
-        '',
+      import.meta.env['VITE_GEMINI_API_KEY'] || import.meta.env['VITE_GEMINI_KEY'] || '',
     );
 
     this.client = new SafeApiClient({
@@ -292,9 +395,12 @@ export class ElectionVertexService {
         return this.keywordFallback(sanitised);
       }
 
+      const faq = ELECTION_FAQ_CORPUS[bestIndex];
+      if (!faq) {return this.keywordFallback(sanitised);}
+
       return {
-        question: ELECTION_FAQ_CORPUS[bestIndex].question,
-        answer: ELECTION_FAQ_CORPUS[bestIndex].answer,
+        question: faq.question,
+        answer: faq.answer,
         score: bestScore,
       };
     } catch {
@@ -373,7 +479,7 @@ export class ElectionVertexService {
       return 0;
     }
 
-    const dotProduct = a.reduce((sum, val, i) => sum + val * (b[i]), 0);
+    const dotProduct = a.reduce((sum, val, i) => sum + val * (b[i] ?? 0), 0);
     const magnitudeA = Math.sqrt(a.reduce((sum, val) => sum + val * val, 0));
     const magnitudeB = Math.sqrt(b.reduce((sum, val) => sum + val * val, 0));
 
@@ -396,15 +502,14 @@ export class ElectionVertexService {
   private keywordFallback(query: string): SemanticFaqMatch | null {
     const lower = query.toLowerCase();
 
-    const match = FAQ_KEYWORD_MAP.find((entry) =>
-      entry.keywords.some((kw) => lower.includes(kw)),
-    );
+    const match = FAQ_KEYWORD_MAP.find((entry) => entry.keywords.some((kw) => lower.includes(kw)));
 
     if (match === undefined) {
       return null;
     }
 
     const faq = ELECTION_FAQ_CORPUS[match.index];
+    if (!faq) {return null;}
     return { question: faq.question, answer: faq.answer, score: 0.6 };
   }
 }

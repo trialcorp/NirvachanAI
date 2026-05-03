@@ -1,6 +1,6 @@
 /**
  * Status Feedback Utility — Premium UX alerts for system states.
- * 
+ *
  * Provides a centralised way to notify users (and developers) about
  * service availability, specifically for missing API configurations.
  */
@@ -34,13 +34,13 @@ export class StatusFeedback {
 
   /**
    * Show a premium configuration warning toast.
-   * 
+   *
    * @param service - Name of the service (e.g., 'Google Translation').
    * @param helpUrl - Optional URL to documentation or settings.
    */
   static showConfigWarning(service: string, helpUrl?: string): void {
     const container = this.ensureContainer();
-    
+
     const toast = document.createElement('div');
     toast.className = 'status-toast warning-toast';
     toast.setAttribute('role', 'alert');
@@ -63,16 +63,19 @@ export class StatusFeedback {
     `;
 
     const header = document.createElement('div');
-    header.style.cssText = 'display: flex; align-items: center; gap: var(--space-2); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: #ff9f43;';
+    header.style.cssText =
+      'display: flex; align-items: center; gap: var(--space-2); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: #ff9f43;';
     header.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01"/></svg> SERVICE UNAVAILABLE`;
-    
+
     const message = document.createElement('div');
-    message.style.cssText = 'font-size: 0.85rem; line-height: 1.5; color: rgba(255, 255, 255, 0.9);';
+    message.style.cssText =
+      'font-size: 0.85rem; line-height: 1.5; color: rgba(255, 255, 255, 0.9);';
     message.textContent = `The ${service} feature is not active because its API Key is missing from the environment.`;
 
     const help = document.createElement('a');
     help.href = helpUrl || '#';
-    help.style.cssText = 'font-size: 0.75rem; color: #ff9f43; text-decoration: underline; font-weight: 600; opacity: 0.8;';
+    help.style.cssText =
+      'font-size: 0.75rem; color: #ff9f43; text-decoration: underline; font-weight: 600; opacity: 0.8;';
     help.textContent = helpUrl ? 'Learn how to configure it' : 'Check .env.example for setup';
     if (!helpUrl) {
       help.style.pointerEvents = 'none';

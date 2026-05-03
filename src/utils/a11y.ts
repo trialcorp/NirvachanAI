@@ -13,10 +13,7 @@
  * @param message - Plain text message to announce.
  * @param priority - 'polite' for non-urgent, 'assertive' for immediate.
  */
-export function announce(
-  message: string,
-  priority: 'polite' | 'assertive' = 'polite',
-): void {
+export function announce(message: string, priority: 'polite' | 'assertive' = 'polite'): void {
   const announcer = document.getElementById('aria-announcer');
   if (!announcer) {
     return;
@@ -83,6 +80,10 @@ export function trapFocus(containerId: string): () => void {
 
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
+
+    if (!first || !last) {
+      return;
+    }
 
     if (event.shiftKey && document.activeElement === first) {
       event.preventDefault();

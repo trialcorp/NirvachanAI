@@ -90,7 +90,8 @@ export class AccessibleFallback {
     }
 
     // Tab buttons
-    panelsContainer.innerHTML = ELECTION_STAGES.map((stage, i) => `
+    panelsContainer.innerHTML = ELECTION_STAGES.map(
+      (stage, i) => `
       <button
         role="tab"
         id="tab-${stage.id}"
@@ -102,7 +103,8 @@ export class AccessibleFallback {
         <span aria-hidden="true">${stage.icon}</span>
         ${escapeHtml(stage.title)}
       </button>
-    `).join('');
+    `,
+    ).join('');
 
     // Initial panel
     this.updateStagePanel(JourneyStageId.ELIGIBILITY);
@@ -289,15 +291,11 @@ export class AccessibleFallback {
       const pos = getStagePosition(state.currentStage);
       const stage = ELECTION_STAGES.find((s) => s.id === state.currentStage);
       if (stage) {
-        announce(
-          `Now viewing stage ${pos} of 7: ${stage.title}. ${stage.subtitle}`,
-        );
+        announce(`Now viewing stage ${pos} of 7: ${stage.title}. ${stage.subtitle}`);
       }
 
       // Update nav
-      setActiveNavSection(
-        state.activeSection || 'election-journey',
-      );
+      setActiveNavSection(state.activeSection || 'election-journey');
     });
   }
 
@@ -312,9 +310,7 @@ export class AccessibleFallback {
         return;
       }
 
-      const tabs = Array.from(
-        this.container.querySelectorAll<HTMLElement>('[role="tab"]'),
-      );
+      const tabs = Array.from(this.container.querySelectorAll<HTMLElement>('[role="tab"]'));
       const currentIndex = tabs.indexOf(target);
 
       let nextIndex = currentIndex;
@@ -352,8 +348,11 @@ export class AccessibleFallback {
           return;
       }
 
-      tabs[nextIndex].focus();
-      const stageId = tabs[nextIndex].getAttribute('data-stage-id') as JourneyStageId;
+      const nextTab = tabs[nextIndex];
+      if (!nextTab) {return;}
+
+      nextTab.focus();
+      const stageId = nextTab.getAttribute('data-stage-id') as JourneyStageId;
       if (stageId) {
         store.goToStage(stageId);
       }

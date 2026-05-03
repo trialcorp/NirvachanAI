@@ -156,7 +156,7 @@ describe('Election Timeline', () => {
       ELECTION_PROCESS_MILESTONES.length + UPCOMING_ELECTION_EVENTS.length,
     );
     // First event should be critical priority
-    expect(all[0].priority).toBe('critical');
+    expect(all[0]!.priority).toBe('critical');
   });
 
   it('getDeadlineEvents returns only deadlines', () => {
@@ -207,7 +207,7 @@ describe('Election FAQ', () => {
     expect(categories.length).toBeGreaterThanOrEqual(4);
     // Check sorted
     for (let i = 1; i < categories.length; i++) {
-      expect(categories[i] >= categories[i - 1]).toBe(true);
+      expect(categories[i]! >= categories[i - 1]!).toBe(true);
     }
   });
 

@@ -42,11 +42,16 @@ describe('Election Journey — Full User Flow', () => {
 
   it('stage navigation matches data layer ordering', () => {
     let current = ELECTION_STAGES[0];
+    expect(current).toBeDefined();
+    if (!current) return;
     for (let i = 0; i < ELECTION_STAGES.length - 1; i++) {
       const next = getNextStage(current.id);
       expect(next).toBeDefined();
-      expect(next!.id).toBe(ELECTION_STAGES[i + 1].id);
-      current = next!;
+      const nextExpected = ELECTION_STAGES[i + 1];
+      expect(nextExpected).toBeDefined();
+      if (!next || !nextExpected) return;
+      expect(next.id).toBe(nextExpected.id);
+      current = next;
     }
   });
 

@@ -66,7 +66,7 @@ export class EligibilityCheckerWidget {
       e.preventDefault();
       const age = parseInt(input.value, 10);
       const result = validateVoterAge(age);
-      
+
       if (!result.isValid) {
         resultDiv.style.color = 'var(--error)';
         resultDiv.textContent = result.errors.join(' ');

@@ -8,7 +8,7 @@
  */
 
 /** Characters that must be escaped in HTML output. */
-const HTML_ESCAPE_MAP: Readonly<Record<string, string>> = {
+const HTML_ESCAPE_MAP: Readonly<Record<string, string | undefined>> = {
   '&': '&amp;',
   '<': '&lt;',
   '>': '&gt;',
@@ -28,7 +28,7 @@ const HTML_ESCAPE_REGEX = /[&<>"'/`]/g;
  * @returns HTML-safe string.
  */
 export function escapeHtml(input: string): string {
-  return input.replace(HTML_ESCAPE_REGEX, (char) => HTML_ESCAPE_MAP[char]);
+  return input.replace(HTML_ESCAPE_REGEX, (char) => HTML_ESCAPE_MAP[char] || char);
 }
 
 /**

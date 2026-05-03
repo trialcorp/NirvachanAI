@@ -7,12 +7,8 @@
  * @module state/store
  */
 
-import {
-  AppState,
-  StateSubscriber,
-  JourneyStageId,
-  ElectionCategory,
-} from '../types/index';
+import type { AppState, StateSubscriber } from '../types/index';
+import { JourneyStageId, ElectionCategory } from '../types/index';
 import { prefersReducedMotion } from '../utils/a11y';
 
 /**

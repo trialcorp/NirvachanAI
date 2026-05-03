@@ -46,7 +46,10 @@ export class TranslationWidget {
     const widget = document.createElement('div');
     widget.id = 'translation-widget';
     widget.setAttribute('role', 'region');
-    widget.setAttribute('aria-label', 'Language selection — powered by Google Cloud Translation API');
+    widget.setAttribute(
+      'aria-label',
+      'Language selection — powered by Google Cloud Translation API',
+    );
     widget.style.cssText = 'display: flex; align-items: center; gap: var(--space-2);';
 
     const label = document.createElement('label');

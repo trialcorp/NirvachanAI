@@ -36,7 +36,7 @@ describe('ElectionCalendarService', () => {
   });
 
   it('encodes dates in YYYYMMDD format (no dashes)', () => {
-    const reminder = ELECTION_REMINDERS[0];
+    const reminder = ELECTION_REMINDERS[0]!;
     const link = service.generateCalendarLink(reminder);
     // Dates in the URL should be YYYYMMDD not YYYY-MM-DD
     expect(link).not.toMatch(/dates=\d{4}-\d{2}-\d{2}/);

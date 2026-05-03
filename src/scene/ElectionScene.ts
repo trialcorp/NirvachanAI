@@ -16,13 +16,13 @@ import { store } from '../state/store';
 
 /** Stage node colours matching the Indian palette. */
 const STAGE_COLOURS: Record<JourneyStageId, number> = {
-  [JourneyStageId.ELIGIBILITY]: 0xff9933,    // Saffron
-  [JourneyStageId.REGISTRATION]: 0xffffff,   // White
-  [JourneyStageId.CANDIDATES]: 0x138808,     // Green
-  [JourneyStageId.VOTING_METHODS]: 0x000080,  // Navy
-  [JourneyStageId.TIMELINE]: 0xff9933,       // Saffron
-  [JourneyStageId.POLLING_DAY]: 0x138808,    // Green
-  [JourneyStageId.POST_VOTE]: 0x000080,      // Navy
+  [JourneyStageId.ELIGIBILITY]: 0xff9933, // Saffron
+  [JourneyStageId.REGISTRATION]: 0xffffff, // White
+  [JourneyStageId.CANDIDATES]: 0x138808, // Green
+  [JourneyStageId.VOTING_METHODS]: 0x000080, // Navy
+  [JourneyStageId.TIMELINE]: 0xff9933, // Saffron
+  [JourneyStageId.POLLING_DAY]: 0x138808, // Green
+  [JourneyStageId.POST_VOTE]: 0x000080, // Navy
 };
 
 /** Metadata for a 3D stage node. */
@@ -222,9 +222,7 @@ export class ElectionScene {
   private createPathLine(): THREE.Line {
     const points = this.stageNodes.map((n) => n.position);
     const curve = new THREE.CatmullRomCurve3(points);
-    const geometry = new THREE.BufferGeometry().setFromPoints(
-      curve.getPoints(100),
-    );
+    const geometry = new THREE.BufferGeometry().setFromPoints(curve.getPoints(100));
     const material = new THREE.LineBasicMaterial({
       color: 0x333366,
       transparent: true,
@@ -251,10 +249,7 @@ export class ElectionScene {
     }
 
     const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute(
-      'position',
-      new THREE.BufferAttribute(positions, 3),
-    );
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
     const material = new THREE.PointsMaterial({
       color: 0x6666aa,
@@ -348,8 +343,13 @@ export class ElectionScene {
       const meshes = this.stageNodes.map((n) => n.mesh);
       const intersects = this.raycaster.intersectObjects(meshes);
 
-      if (intersects.length > 0) {
-        const stageId = intersects[0].object.userData.stageId as JourneyStageId;
+      const firstIntersect = intersects[0];
+      if (firstIntersect) {
+        const stageId = firstIntersect.object.userData['stageId'] as JourneyStageId;
+        const node = this.stageNodes.find((n) => n.stageId === stageId);
+        if (!node) {
+          return;
+        }
         store.goToStage(stageId);
       }
     };

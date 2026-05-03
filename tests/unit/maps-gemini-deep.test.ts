@@ -61,7 +61,7 @@ describe('ElectionMapsService — Deep Coverage', () => {
 
     const result = await service.searchPollingLocations('Mumbai');
     expect(result.ok).toBe(true);
-    expect(result.data?.[0].name).toBe('Test Polling Booth');
+    expect(result.data![0]!.name).toBe('Test Polling Booth');
   });
 
   it('searchPollingLocations with Places API - REQUEST_DENIED', async () => {

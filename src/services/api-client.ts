@@ -7,7 +7,7 @@
  * @module services/api-client
  */
 
-import { ApiResponse, FetchConfig } from '../types/index';
+import type { ApiResponse, FetchConfig } from '../types/index';
 
 /** Default configuration for API calls. */
 const DEFAULT_CONFIG: FetchConfig = {
@@ -69,7 +69,11 @@ export class SafeApiClient {
    * @returns Typed API response.
    */
   async get<T>(path: string, headers?: Record<string, string>): Promise<ApiResponse<T>> {
-    return this.request<T>(path, { method: 'GET', headers });
+    const options: RequestInit = { method: 'GET' };
+    if (headers) {
+      options.headers = headers;
+    }
+    return this.request<T>(path, options);
   }
 
   /**
@@ -102,10 +106,7 @@ export class SafeApiClient {
    * @param options - Fetch options.
    * @returns Typed API response wrapper.
    */
-  private async request<T>(
-    path: string,
-    options: RequestInit,
-  ): Promise<ApiResponse<T>> {
+  private async request<T>(path: string, options: RequestInit): Promise<ApiResponse<T>> {
     const url = `${this.config.baseUrl}${path}`;
     const maxRetries = this.config.retries ?? 1;
 
@@ -137,8 +138,7 @@ export class SafeApiClient {
       } catch (error: unknown) {
         const isLastAttempt = attempt === maxRetries;
         if (isLastAttempt) {
-          const message =
-            error instanceof Error ? error.message : 'Unknown network error';
+          const message = error instanceof Error ? error.message : 'Unknown network error';
           const isTimeout = message.includes('abort');
           return {
             ok: false,
@@ -150,9 +150,7 @@ export class SafeApiClient {
           };
         }
         // Wait before retry (exponential backoff)
-        await new Promise((resolve) =>
-          setTimeout(resolve, Math.pow(2, attempt) * 500),
-        );
+        await new Promise((resolve) => setTimeout(resolve, Math.pow(2, attempt) * 500));
       }
     }
 

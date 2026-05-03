@@ -135,7 +135,8 @@ export class MapsWidget {
       return;
     }
 
-    results.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: var(--space-4);">🔍 Searching for polling locations...</p>';
+    results.innerHTML =
+      '<p style="text-align: center; color: var(--text-muted); padding: var(--space-4);">🔍 Searching for polling locations...</p>';
     announce('Searching for polling locations near ' + sanitised);
 
     if (!this.maps.isConfigured()) {

@@ -9,12 +9,12 @@
 
 /// <reference types="@types/google.maps" />
 
-import { PollingLocation, ApiResponse } from '../types/index';
+import type { PollingLocation, ApiResponse } from '../types/index';
 import { sanitizeFull } from '../utils/sanitize';
 import { ElectionCache, makeCacheKey } from '../utils/cache';
 
 /** Default map centre — New Delhi (India Gate). */
-const INDIA_CENTRE = { lat: 28.6139, lng: 77.2090 };
+const INDIA_CENTRE = { lat: 28.6139, lng: 77.209 };
 
 /** Default zoom level for city-level view. */
 const DEFAULT_ZOOM = 12;
@@ -36,7 +36,9 @@ export class ElectionMapsService {
    * Initialize the Google Maps Service.
    */
   constructor() {
-    this.apiKey = String(import.meta.env.VITE_GOOGLE_MAPS_API_KEY || import.meta.env.VITE_GOOGLE_MAPS_KEY || '');
+    this.apiKey = String(
+      import.meta.env['VITE_GOOGLE_MAPS_API_KEY'] || import.meta.env['VITE_GOOGLE_MAPS_KEY'] || '',
+    );
     this.cache = new ElectionCache<PollingLocation[]>({
       defaultTtlMs: 30 * 60 * 1000, // 30 minutes
       maxEntries: 20,
@@ -102,11 +104,7 @@ export class ElectionMapsService {
    * @param zoom - Optional zoom level.
    * @returns True if the map was initialised.
    */
-  initMap(
-    containerId: string,
-    centre?: { lat: number; lng: number },
-    zoom?: number,
-  ): boolean {
+  initMap(containerId: string, centre?: { lat: number; lng: number }, zoom?: number): boolean {
     const container = document.getElementById(containerId);
     if (!container || !this.isLoaded) {
       return false;
@@ -173,16 +171,18 @@ export class ElectionMapsService {
       };
 
       service.textSearch(request, (results, status) => {
-        if (
-          status !== google.maps.places.PlacesServiceStatus.OK ||
-          !results
-        ) {
+        const statusOk: string = google.maps.places.PlacesServiceStatus.OK;
+        const statusDenied: string = google.maps.places.PlacesServiceStatus.REQUEST_DENIED;
+        const statusZero: string = google.maps.places.PlacesServiceStatus.ZERO_RESULTS;
+
+        if (status !== statusOk || !results) {
           let errorMsg = 'No locations found. Try a different search.';
-          if (status === google.maps.places.PlacesServiceStatus.REQUEST_DENIED) {
-            errorMsg = 'Google Maps API Error: Request Denied. Your API key might be invalid or not enabled for the Places API.';
-          } else if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
+          if (status === statusDenied) {
+            errorMsg =
+              'Google Maps API Error: Request Denied. Your API key might be invalid or not enabled for the Places API.';
+          } else if (status === statusZero) {
             errorMsg = 'No polling locations found for this area. Try a broader search.';
-          } else if (status !== google.maps.places.PlacesServiceStatus.OK) {
+          } else if (status !== statusOk) {
             errorMsg = `Google Maps Error: ${status}`;
           }
 
@@ -264,7 +264,7 @@ export class ElectionMapsService {
         name: 'District Election Office',
         address: 'District Collectorate, your nearest district headquarters',
         latitude: 28.6139,
-        longitude: 77.2090,
+        longitude: 77.209,
         constituency: 'Check with your local BLO',
         state: 'Your State',
       },
@@ -278,7 +278,7 @@ export class ElectionMapsService {
         name: 'Booth Level Officer (BLO)',
         address: 'Contact your BLO through the Voter Helpline App or call 1950',
         latitude: 28.6353,
-        longitude: 77.2250,
+        longitude: 77.225,
       },
     ];
   }

@@ -95,12 +95,7 @@ export class Logger {
    * @param message - Log message.
    * @param context - Optional context data.
    */
-  private static log(
-    level: LogLevel,
-    module: string,
-    message: string,
-    context?: unknown,
-  ): void {
+  private static log(level: LogLevel, module: string, message: string, context?: unknown): void {
     if (Logger.LEVEL_PRIORITY[level] < Logger.LEVEL_PRIORITY[Logger.minLevel]) {
       return;
     }

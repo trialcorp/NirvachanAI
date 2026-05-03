@@ -146,7 +146,9 @@ function initListeners(): void {
   });
 
   // Announce app ready
-  announce('NirvachanAI is ready. Navigate through the election journey to learn about Indian elections.');
+  announce(
+    'NirvachanAI is ready. Navigate through the election journey to learn about Indian elections.',
+  );
 
   // Scroll spy for nav
   setupScrollSpy();
@@ -178,12 +180,14 @@ function initListeners(): void {
  */
 function setupFontSizeToggle(): void {
   const fontSizeBtns = document.querySelectorAll('[data-font-size]');
-  if (fontSizeBtns.length === 0) {return;}
+  if (fontSizeBtns.length === 0) {
+    return;
+  }
 
   const FONT_SIZES: Record<string, string> = {
-    'small': '87.5%',
-    'default': '100%',
-    'large': '112.5%',
+    small: '87.5%',
+    default: '100%',
+    large: '112.5%',
   };
 
   fontSizeBtns.forEach((btn) => {
@@ -194,8 +198,10 @@ function setupFontSizeToggle(): void {
 
       // Update aria-pressed states
       fontSizeBtns.forEach((b) => {
-        b.setAttribute('aria-pressed',
-          (b as HTMLElement).getAttribute('data-font-size') === size ? 'true' : 'false');
+        b.setAttribute(
+          'aria-pressed',
+          (b as HTMLElement).getAttribute('data-font-size') === size ? 'true' : 'false',
+        );
       });
 
       // Announce the change
@@ -211,8 +217,10 @@ function setupFontSizeToggle(): void {
   if (saved && FONT_SIZES[saved]) {
     document.documentElement.style.fontSize = FONT_SIZES[saved];
     fontSizeBtns.forEach((b) => {
-      b.setAttribute('aria-pressed',
-        (b as HTMLElement).getAttribute('data-font-size') === saved ? 'true' : 'false');
+      b.setAttribute(
+        'aria-pressed',
+        (b as HTMLElement).getAttribute('data-font-size') === saved ? 'true' : 'false',
+      );
     });
   }
 }
@@ -225,7 +233,9 @@ function setupFontSizeToggle(): void {
  */
 function setupLanguageAnnouncements(): void {
   const langSelect = document.getElementById('language-select') as HTMLSelectElement;
-  if (!langSelect) {return;}
+  if (!langSelect) {
+    return;
+  }
 
   langSelect.addEventListener('change', () => {
     const selectedOption = langSelect.options[langSelect.selectedIndex];
@@ -239,7 +249,9 @@ function setupLanguageAnnouncements(): void {
  */
 function setupThemeToggle(): void {
   const toggle = document.getElementById('theme-toggle');
-  if (!toggle) {return;}
+  if (!toggle) {
+    return;
+  }
 
   // Check saved preference or system preference
   const saved = localStorage.getItem('theme');
@@ -267,14 +279,20 @@ function setupThemeToggle(): void {
  */
 function setupScrollProgress(): void {
   const bar = document.getElementById('scroll-progress');
-  if (!bar) {return;}
+  if (!bar) {
+    return;
+  }
 
-  window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = docHeight > 0 ? scrollTop / docHeight : 0;
-    bar.style.transform = `scaleX(${progress})`;
-  }, { passive: true });
+  window.addEventListener(
+    'scroll',
+    () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+      bar.style.transform = `scaleX(${progress})`;
+    },
+    { passive: true },
+  );
 }
 
 /**
@@ -282,15 +300,21 @@ function setupScrollProgress(): void {
  */
 function setupScrollToTop(): void {
   const btn = document.getElementById('scroll-top-btn');
-  if (!btn) {return;}
+  if (!btn) {
+    return;
+  }
 
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 400) {
-      btn.classList.add('visible');
-    } else {
-      btn.classList.remove('visible');
-    }
-  }, { passive: true });
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (window.scrollY > 400) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    },
+    { passive: true },
+  );
 
   btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -301,10 +325,14 @@ function setupScrollToTop(): void {
  * Set up Intersection Observer for section entry animations.
  */
 function setupScrollAnimations(): void {
-  if (prefersReducedMotion()) {return;}
+  if (prefersReducedMotion()) {
+    return;
+  }
 
   const elements = document.querySelectorAll('.animate-in');
-  if (elements.length === 0) {return;}
+  if (elements.length === 0) {
+    return;
+  }
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -329,9 +357,7 @@ function setupScrollAnimations(): void {
 function supportsWebGL(): boolean {
   try {
     const canvas = document.createElement('canvas');
-    return !!(
-      canvas.getContext('webgl2') || canvas.getContext('webgl')
-    );
+    return !!(canvas.getContext('webgl2') || canvas.getContext('webgl'));
   } catch {
     return false;
   }

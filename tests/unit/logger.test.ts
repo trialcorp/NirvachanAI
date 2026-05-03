@@ -75,19 +75,19 @@ describe('Logger', () => {
   describe('structured output', () => {
     it('includes module name in prefix', () => {
       Logger.info('my-module', 'hello');
-      const prefix = infoSpy.mock.calls[0][0] as string;
+      const prefix = infoSpy.mock.calls[0]![0] as string;
       expect(prefix).toContain('[my-module]');
     });
 
     it('includes level in prefix', () => {
       Logger.warn('mod', 'test');
-      const prefix = warnSpy.mock.calls[0][0] as string;
+      const prefix = warnSpy.mock.calls[0]![0] as string;
       expect(prefix).toContain('[WARN]');
     });
 
     it('includes ISO timestamp in prefix', () => {
       Logger.info('mod', 'test');
-      const prefix = infoSpy.mock.calls[0][0] as string;
+      const prefix = infoSpy.mock.calls[0]![0] as string;
       // Should contain ISO-like date pattern
       expect(prefix).toMatch(/\[\d{4}-\d{2}-\d{2}T/);
     });

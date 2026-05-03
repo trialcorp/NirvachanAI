@@ -7,7 +7,7 @@
  * @module utils/cache
  */
 
-import { CacheEntry, CacheConfig } from '../types/index';
+import type { CacheEntry, CacheConfig } from '../types/index';
 
 /** Default cache configuration. */
 const DEFAULT_CONFIG: CacheConfig = {

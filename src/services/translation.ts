@@ -19,16 +19,16 @@ import { ElectionCache, makeCacheKey } from '../utils/cache';
 
 /** Supported Indian language codes for civic translation. */
 export type IndianLanguageCode =
-  | 'hi'  // Hindi
-  | 'te'  // Telugu
-  | 'ta'  // Tamil
-  | 'kn'  // Kannada
-  | 'bn'  // Bengali
-  | 'mr'  // Marathi
-  | 'gu'  // Gujarati
-  | 'ml'  // Malayalam
-  | 'pa'  // Punjabi
-  | 'or'  // Odia
+  | 'hi' // Hindi
+  | 'te' // Telugu
+  | 'ta' // Tamil
+  | 'kn' // Kannada
+  | 'bn' // Bengali
+  | 'mr' // Marathi
+  | 'gu' // Gujarati
+  | 'ml' // Malayalam
+  | 'pa' // Punjabi
+  | 'or' // Odia
   | 'as'; // Assamese
 
 /** Translation API request body. */
@@ -59,7 +59,11 @@ interface TranslationApiResponse {
 const TRANSLATION_API_BASE = 'https://translation.googleapis.com/language/translate/v2';
 
 /** Human-readable names for the judge-readable feature surface. */
-export const SUPPORTED_LANGUAGES: readonly { code: IndianLanguageCode; name: string; nativeName: string }[] = [
+export const SUPPORTED_LANGUAGES: readonly {
+  code: IndianLanguageCode;
+  name: string;
+  nativeName: string;
+}[] = [
   { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी' },
   { code: 'te', name: 'Telugu', nativeName: 'తెలుగు' },
   { code: 'ta', name: 'Tamil', nativeName: 'தமிழ்' },
@@ -91,9 +95,7 @@ export class ElectionTranslationService {
    * Initialize the Cloud Translation Service.
    */
   constructor() {
-    this.apiKey = String(
-      import.meta.env.VITE_GOOGLE_TRANSLATION_API_KEY || '',
-    );
+    this.apiKey = String(import.meta.env.VITE_GOOGLE_TRANSLATION_API_KEY || '');
 
     this.client = new SafeApiClient({
       baseUrl: TRANSLATION_API_BASE,
@@ -149,10 +151,7 @@ export class ElectionTranslationService {
         format: 'text',
       };
 
-      const response = await this.client.post<TranslationApiResponse>(
-        `?key=${this.apiKey}`,
-        body,
-      );
+      const response = await this.client.post<TranslationApiResponse>(`?key=${this.apiKey}`, body);
 
       if (response.ok && response.data?.data?.translations?.[0]?.translatedText) {
         const translated = response.data.data.translations[0].translatedText;
@@ -196,10 +195,7 @@ export class ElectionTranslationService {
         format: 'text',
       };
 
-      const response = await this.client.post<TranslationApiResponse>(
-        `?key=${this.apiKey}`,
-        body,
-      );
+      const response = await this.client.post<TranslationApiResponse>(`?key=${this.apiKey}`, body);
 
       if (response.ok && response.data?.data?.translations) {
         return response.data.data.translations.map((t) => t.translatedText);

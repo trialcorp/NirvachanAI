@@ -7,7 +7,8 @@
  * @module utils/validate
  */
 
-import { ValidationResult, ElectionCategory, JourneyStageId } from '../types/index';
+import type { ValidationResult } from '../types/index';
+import { ElectionCategory, JourneyStageId } from '../types/index';
 import { sanitizeUserInput } from './sanitize';
 
 /** Allowlist of valid election categories. */
@@ -89,9 +90,7 @@ export function validateStageId(stageId: unknown): ValidationResult {
   if (!VALID_STAGE_IDS.has(stageId)) {
     return {
       isValid: false,
-      errors: [
-        `Invalid stage ID "${stageId}". Valid stages: ${[...VALID_STAGE_IDS].join(', ')}.`,
-      ],
+      errors: [`Invalid stage ID "${stageId}". Valid stages: ${[...VALID_STAGE_IDS].join(', ')}.`],
     };
   }
 

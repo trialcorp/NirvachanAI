@@ -98,7 +98,7 @@ describe('Coverage Filler Tests', () => {
       // This call should hit the cache directly (lines 138-140)
       const res = await service.searchPollingLocations('delhi');
       expect(res.ok).toBe(true);
-      expect(res.data![0].name).toBe('Cached Booth');
+      expect(res.data![0]!.name).toBe('Cached Booth');
     });
 
     it('searchWithPlacesApi returns error without mapInstance', async () => {
@@ -136,10 +136,10 @@ describe('Coverage Filler Tests', () => {
       // @ts-ignore
       const res = await service.searchWithPlacesApi('test query', 'cache-key-test');
       expect(res.ok).toBe(true);
-      expect(res.data![0].name).toBe('Unknown Location');
-      expect(res.data![0].address).toBe('Address unavailable');
-      expect(res.data![0].latitude).toBe(0);
-      expect(res.data![0].longitude).toBe(0);
+      expect(res.data![0]!.name).toBe('Unknown Location');
+      expect(res.data![0]!.address).toBe('Address unavailable');
+      expect(res.data![0]!.latitude).toBe(0);
+      expect(res.data![0]!.longitude).toBe(0);
 
       // @ts-ignore
       delete globalThis.google;
@@ -343,7 +343,7 @@ describe('Coverage Filler Tests', () => {
         callCount++;
         return Promise.reject(new Error('fail'));
       });
-      const client = new SafeApiClient({ baseUrl: 'https://example.com', timeoutMs: 100, retries: undefined });
+      const client = new SafeApiClient({ baseUrl: 'https://example.com', timeoutMs: 100 } as any);
       await client.get('/test');
       expect(callCount).toBeGreaterThanOrEqual(2);
       globalThis.fetch = origFetch;

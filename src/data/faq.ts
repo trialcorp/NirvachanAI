@@ -7,7 +7,8 @@
  * @module data/faq
  */
 
-import { FAQItem, JourneyStageId } from '../types/index';
+import type { FAQItem } from '../types/index';
+import { JourneyStageId } from '../types/index';
 
 /**
  * Complete FAQ catalogue for voter education.
@@ -87,7 +88,7 @@ export const ELECTION_FAQ: readonly FAQItem[] = [
     id: 'faq-postal-ballot',
     question: 'Who can vote by postal ballot?',
     answer:
-      'Postal ballot (Electronically Transmitted Postal Ballot System — ETPBS) is available to: (a) service voters (armed forces, paramilitary, diplomats); (b) voters on election duty; (c) voters above 80 years of age; (d) persons with disabilities (PwD); (e) voters under preventive detention; and (f) COVID-19 positive/quarantined persons (as per ECI\'s COVID protocols).',
+      "Postal ballot (Electronically Transmitted Postal Ballot System — ETPBS) is available to: (a) service voters (armed forces, paramilitary, diplomats); (b) voters on election duty; (c) voters above 80 years of age; (d) persons with disabilities (PwD); (e) voters under preventive detention; and (f) COVID-19 positive/quarantined persons (as per ECI's COVID protocols).",
     category: 'Voting Process',
     relatedStageId: JourneyStageId.VOTING_METHODS,
   },
@@ -131,7 +132,7 @@ export const ELECTION_FAQ: readonly FAQItem[] = [
     id: 'faq-results-where',
     question: 'Where can I see election results?',
     answer:
-      'Official results are published in real-time on results.eci.gov.in and through the ECI\'s social media channels. Major news channels (Doordarshan, NDTV, Times Now, etc.) also provide live coverage. Constituency-wise results are declared throughout counting day.',
+      "Official results are published in real-time on results.eci.gov.in and through the ECI's social media channels. Major news channels (Doordarshan, NDTV, Times Now, etc.) also provide live coverage. Constituency-wise results are declared throughout counting day.",
     category: 'After Voting',
     relatedStageId: JourneyStageId.POST_VOTE,
   },
@@ -169,236 +170,275 @@ export const ELECTION_FAQ: readonly FAQItem[] = [
   {
     id: 'faq-model-code-conduct',
     question: 'What is the Model Code of Conduct (MCC)?',
-    answer: 'The MCC is a set of guidelines issued by the ECI for political parties and candidates during elections. It governs speeches, polling day conduct, portfolios, and election manifestos to ensure free and fair elections. It comes into force immediately after the election schedule is announced.',
-    category: 'Election Rules'
+    answer:
+      'The MCC is a set of guidelines issued by the ECI for political parties and candidates during elections. It governs speeches, polling day conduct, portfolios, and election manifestos to ensure free and fair elections. It comes into force immediately after the election schedule is announced.',
+    category: 'Election Rules',
   },
   {
     id: 'faq-star-campaigners',
     question: 'Who are Star Campaigners?',
-    answer: 'Star Campaigners are individuals nominated by political parties (up to 40 for recognized parties) whose election expenses are not added to the individual candidate\'s spending limit, provided they campaign only for the party generally and not for a specific candidate.',
-    category: 'Election Rules'
+    answer:
+      "Star Campaigners are individuals nominated by political parties (up to 40 for recognized parties) whose election expenses are not added to the individual candidate's spending limit, provided they campaign only for the party generally and not for a specific candidate.",
+    category: 'Election Rules',
   },
   {
     id: 'faq-voter-slip-valid',
     question: 'Is a Voter Information Slip sufficient for voting?',
-    answer: 'No. While the Voter Information Slip (voter slip) helps you find your booth and serial number, it is not an identity proof. You must carry your EPIC (Voter ID) or one of the 12 other ECI-approved photo identity documents to the polling station.',
-    category: 'Polling Day'
+    answer:
+      'No. While the Voter Information Slip (voter slip) helps you find your booth and serial number, it is not an identity proof. You must carry your EPIC (Voter ID) or one of the 12 other ECI-approved photo identity documents to the polling station.',
+    category: 'Polling Day',
   },
   {
     id: 'faq-voter-id-lost',
     question: 'What to do if I lost my Voter ID card?',
-    answer: 'If your Voter ID is lost, you can apply for a replacement (Form 001) online via the Voter Helpline App or NVSP. You can also vote using other approved IDs like Aadhaar or Passport if your name is in the current electoral roll.',
-    category: 'Registration'
+    answer:
+      'If your Voter ID is lost, you can apply for a replacement (Form 001) online via the Voter Helpline App or NVSP. You can also vote using other approved IDs like Aadhaar or Passport if your name is in the current electoral roll.',
+    category: 'Registration',
   },
   {
     id: 'faq-election-expense-limit',
     question: 'What is the election expenditure limit for candidates?',
-    answer: 'For Lok Sabha, the limit is ₹95 lakh for larger states and ₹75 lakh for smaller states. For Assembly elections, it is ₹40 lakh for larger states and ₹28 lakh for smaller ones. These limits are periodically revised by the government based on ECI recommendations.',
-    category: 'Election Rules'
+    answer:
+      'For Lok Sabha, the limit is ₹95 lakh for larger states and ₹75 lakh for smaller states. For Assembly elections, it is ₹40 lakh for larger states and ₹28 lakh for smaller ones. These limits are periodically revised by the government based on ECI recommendations.',
+    category: 'Election Rules',
   },
   {
     id: 'faq-tendered-vote',
     question: 'What is a Tendered Vote?',
-    answer: 'If you find that someone has already voted in your name, you can alert the Presiding Officer. After verifying your identity, you will be allowed to cast a "Tendered Vote" using a ballot paper (not the EVM). These are kept in a separate cover.',
-    category: 'Polling Day'
+    answer:
+      'If you find that someone has already voted in your name, you can alert the Presiding Officer. After verifying your identity, you will be allowed to cast a "Tendered Vote" using a ballot paper (not the EVM). These are kept in a separate cover.',
+    category: 'Polling Day',
   },
   {
     id: 'faq-challenge-vote',
     question: 'What is a Challenged Vote?',
-    answer: 'A polling agent can challenge your identity by depositing a small fee. The Presiding Officer then conducts a summary inquiry. If the challenge is not proven, you are allowed to vote. If it is proven, you may be handed over to the police.',
-    category: 'Polling Day'
+    answer:
+      'A polling agent can challenge your identity by depositing a small fee. The Presiding Officer then conducts a summary inquiry. If the challenge is not proven, you are allowed to vote. If it is proven, you may be handed over to the police.',
+    category: 'Polling Day',
   },
   {
     id: 'faq-exit-polls-ban',
     question: 'Are exit polls allowed during multi-phase elections?',
-    answer: 'Exit polls are banned from the start of the first phase until the conclusion of the final phase of voting in all states involved. This prevents early results from influencing voters in later phases. Opinion polls are also restricted near polling dates.',
-    category: 'Election Rules'
+    answer:
+      'Exit polls are banned from the start of the first phase until the conclusion of the final phase of voting in all states involved. This prevents early results from influencing voters in later phases. Opinion polls are also restricted near polling dates.',
+    category: 'Election Rules',
   },
   {
     id: 'faq-voter-turnout-app',
     question: 'How can I check real-time voter turnout?',
-    answer: 'The ECI provides the "Voter Turnout App" which displays real-time estimated turnout percentages for various constituencies and phases of the election as updated by the Returning Officers.',
-    category: 'Digital Tools'
+    answer:
+      'The ECI provides the "Voter Turnout App" which displays real-time estimated turnout percentages for various constituencies and phases of the election as updated by the Returning Officers.',
+    category: 'Digital Tools',
   },
   {
     id: 'faq-braille-evm',
     question: 'Do EVMs have Braille features?',
-    answer: 'Yes, every EVM has Braille signage (numbers 1 to 16) on the right side of the blue button for visually impaired voters. The ECI also provides Braille-printed dummy ballot papers and allows a companion if requested.',
-    category: 'Accessibility'
+    answer:
+      'Yes, every EVM has Braille signage (numbers 1 to 16) on the right side of the blue button for visually impaired voters. The ECI also provides Braille-printed dummy ballot papers and allows a companion if requested.',
+    category: 'Accessibility',
   },
   {
     id: 'faq-companion-vote',
     question: 'Can a disabled voter take a companion to the booth?',
-    answer: 'Yes. Rule 49N allows a blind or infirm voter who cannot record a vote alone to take a companion (aged 18+) to the voting compartment. The companion must sign a declaration of secrecy.',
-    category: 'Accessibility'
+    answer:
+      'Yes. Rule 49N allows a blind or infirm voter who cannot record a vote alone to take a companion (aged 18+) to the voting compartment. The companion must sign a declaration of secrecy.',
+    category: 'Accessibility',
   },
   {
     id: 'faq-voter-helpline-1950',
     question: 'What is the 1950 helpline?',
-    answer: '1950 is the ECI\'s toll-free National Voter Helpline number. You can call it to check your registration status, get information on polling booths, or register complaints. You can also SMS your EPIC number to 1950.',
-    category: 'Digital Tools'
+    answer:
+      "1950 is the ECI's toll-free National Voter Helpline number. You can call it to check your registration status, get information on polling booths, or register complaints. You can also SMS your EPIC number to 1950.",
+    category: 'Digital Tools',
   },
   {
     id: 'faq-election-duty-vote',
     question: 'How do polling officials vote?',
-    answer: 'Officials on election duty can vote via an "Election Duty Certificate" (EDC) if they are posted in their own constituency, allowing them to vote at the booth where they are working. Otherwise, they use a Postal Ballot.',
-    category: 'Election Types'
+    answer:
+      'Officials on election duty can vote via an "Election Duty Certificate" (EDC) if they are posted in their own constituency, allowing them to vote at the booth where they are working. Otherwise, they use a Postal Ballot.',
+    category: 'Election Types',
   },
   {
     id: 'faq-overseas-voter-registration',
     question: 'How do NRIs register to vote?',
-    answer: 'NRIs can register online using Form 6A on the NVSP portal. They must upload a copy of their passport showing the valid visa/residence status and Indian address. Once verified, they appear in the "Overseas Electors" section of the roll.',
-    category: 'Registration'
+    answer:
+      'NRIs can register online using Form 6A on the NVSP portal. They must upload a copy of their passport showing the valid visa/residence status and Indian address. Once verified, they appear in the "Overseas Electors" section of the roll.',
+    category: 'Registration',
   },
   {
     id: 'faq-candidate-qualify',
     question: 'What are the qualifications to be an MP?',
-    answer: 'To be a Lok Sabha MP, one must be a citizen of India, at least 25 years old, and a registered voter. For Rajya Sabha, the minimum age is 30 years. They must not hold an office of profit or be disqualified under any law.',
-    category: 'Election Rules'
+    answer:
+      'To be a Lok Sabha MP, one must be a citizen of India, at least 25 years old, and a registered voter. For Rajya Sabha, the minimum age is 30 years. They must not hold an office of profit or be disqualified under any law.',
+    category: 'Election Rules',
   },
   {
     id: 'faq-recount-request',
     question: 'Can a candidate ask for a recount?',
-    answer: 'Yes. A candidate or their agent can apply in writing to the Returning Officer for a recount of votes before the result is officially declared. The RO decides if the request is valid and may order a full or partial recount.',
-    category: 'Election Rules'
+    answer:
+      'Yes. A candidate or their agent can apply in writing to the Returning Officer for a recount of votes before the result is officially declared. The RO decides if the request is valid and may order a full or partial recount.',
+    category: 'Election Rules',
   },
   {
     id: 'faq-symbol-allotment',
     question: 'How are election symbols allotted?',
-    answer: 'Recognized national and state parties have reserved symbols (e.g., Lotus, Hand, Elephant). Independent candidates and unrecognized parties choose from a list of "free symbols" provided by the ECI.',
-    category: 'Election Rules'
+    answer:
+      'Recognized national and state parties have reserved symbols (e.g., Lotus, Hand, Elephant). Independent candidates and unrecognized parties choose from a list of "free symbols" provided by the ECI.',
+    category: 'Election Rules',
   },
   {
     id: 'faq-voter-id-correction',
     question: 'How do I correct errors in my Voter ID?',
-    answer: 'Use Form 8 on the NVSP portal or Voter Helpline App for any "Correction of Entries" like name, age, or address. You will need to upload supporting documents for the changes requested.',
-    category: 'Registration'
+    answer:
+      'Use Form 8 on the NVSP portal or Voter Helpline App for any "Correction of Entries" like name, age, or address. You will need to upload supporting documents for the changes requested.',
+    category: 'Registration',
   },
   {
     id: 'faq-booth-level-officer',
     question: 'Who is a Booth Level Officer (BLO)?',
-    answer: 'The BLO is a local government/semi-government official (like a teacher) designated by the ECI for a specific polling area. They maintain the voter list, verify registrations, and distribute voter slips.',
-    category: 'Registration'
+    answer:
+      'The BLO is a local government/semi-government official (like a teacher) designated by the ECI for a specific polling area. They maintain the voter list, verify registrations, and distribute voter slips.',
+    category: 'Registration',
   },
   {
     id: 'faq-electronic-proxy',
     question: 'Can I vote online in India?',
-    answer: 'Currently, there is no online voting for general citizens. You must visit your designated polling booth. However, "Classified Service Voters" (Armed Forces) can use the Electronically Transmitted Postal Ballot System (ETPBS).',
-    category: 'Digital Tools'
+    answer:
+      'Currently, there is no online voting for general citizens. You must visit your designated polling booth. However, "Classified Service Voters" (Armed Forces) can use the Electronically Transmitted Postal Ballot System (ETPBS).',
+    category: 'Digital Tools',
   },
   {
     id: 'faq-c-vigil-app',
     question: 'What is the cVIGIL app?',
-    answer: 'cVIGIL is an ECI app that allows citizens to report violations of the Model Code of Conduct (like bribery or loud music) by taking a photo or video. The ECI aims to act on reports within 100 minutes.',
-    category: 'Digital Tools'
+    answer:
+      'cVIGIL is an ECI app that allows citizens to report violations of the Model Code of Conduct (like bribery or loud music) by taking a photo or video. The ECI aims to act on reports within 100 minutes.',
+    category: 'Digital Tools',
   },
   {
     id: 'faq-voter-id-transfer',
     question: 'How do I move my Voter ID to a new city?',
-    answer: 'If you move, do NOT apply for a new card. Use Form 8 (Shifting) to transfer your existing registration to your new constituency. This ensures your name is removed from the old location and added to the new one.',
-    category: 'Registration'
+    answer:
+      'If you move, do NOT apply for a new card. Use Form 8 (Shifting) to transfer your existing registration to your new constituency. This ensures your name is removed from the old location and added to the new one.',
+    category: 'Registration',
   },
   {
     id: 'faq-proxy-voting-who',
     question: 'Who is eligible for Proxy Voting?',
-    answer: 'Proxy voting is only available to "Classified Service Voters" (Armed Forces and specific central paramilitary forces). They can appoint a proxy (a resident of their constituency) to vote on their behalf.',
-    category: 'Election Types'
+    answer:
+      'Proxy voting is only available to "Classified Service Voters" (Armed Forces and specific central paramilitary forces). They can appoint a proxy (a resident of their constituency) to vote on their behalf.',
+    category: 'Election Types',
   },
   {
     id: 'faq-delimitation-meaning',
     question: 'What is Delimitation?',
-    answer: 'Delimitation is the process of redrawing boundaries of Lok Sabha and Assembly constituencies based on the latest census to ensure each seat represents a roughly equal population. It is done by a Delimitation Commission.',
-    category: 'Election Rules'
+    answer:
+      'Delimitation is the process of redrawing boundaries of Lok Sabha and Assembly constituencies based on the latest census to ensure each seat represents a roughly equal population. It is done by a Delimitation Commission.',
+    category: 'Election Rules',
   },
   {
     id: 'faq-voting-time',
     question: 'What are the typical voting hours?',
-    answer: 'Poll timings are usually from 7:00 AM to 6:00 PM, though they may vary by region (e.g., in sensitive areas or based on weather). Anyone in the queue by the closing time is allowed to vote.',
-    category: 'Polling Day'
+    answer:
+      'Poll timings are usually from 7:00 AM to 6:00 PM, though they may vary by region (e.g., in sensitive areas or based on weather). Anyone in the queue by the closing time is allowed to vote.',
+    category: 'Polling Day',
   },
   {
     id: 'faq-ink-purpose',
     question: 'What is the purpose of the indelible ink?',
-    answer: 'Indelible ink (silver nitrate based) is applied to the left forefinger to prevent multiple voting. It stays for several days and cannot be removed by chemicals or soap, serving as a visual proof of having voted.',
-    category: 'Polling Day'
+    answer:
+      'Indelible ink (silver nitrate based) is applied to the left forefinger to prevent multiple voting. It stays for several days and cannot be removed by chemicals or soap, serving as a visual proof of having voted.',
+    category: 'Polling Day',
   },
   {
     id: 'faq-voter-slip-missing',
-    question: 'Can I vote if I didn\'t receive a voter slip?',
-    answer: 'Yes! As long as your name is in the electoral roll, you can vote. You can find your serial number using the ECI website and carry any approved photo ID to the booth.',
-    category: 'Polling Day'
+    question: "Can I vote if I didn't receive a voter slip?",
+    answer:
+      'Yes! As long as your name is in the electoral roll, you can vote. You can find your serial number using the ECI website and carry any approved photo ID to the booth.',
+    category: 'Polling Day',
   },
   {
     id: 'faq-criminal-records-candidate',
-    question: 'Where can I see a candidate\'s criminal records?',
-    answer: 'Candidates must file an affidavit (Form 26) disclosing their assets, liabilities, and criminal records. These are available on the ECI website under "Know Your Candidate" (KYC) section and the KYC app.',
-    category: 'Election Rules'
+    question: "Where can I see a candidate's criminal records?",
+    answer:
+      'Candidates must file an affidavit (Form 26) disclosing their assets, liabilities, and criminal records. These are available on the ECI website under "Know Your Candidate" (KYC) section and the KYC app.',
+    category: 'Election Rules',
   },
   {
     id: 'faq-presiding-officer-role',
     question: 'What is the role of the Presiding Officer?',
-    answer: 'The Presiding Officer is in charge of a single polling station. They supervise the entire voting process, ensure secrecy, handle challenges/tendered votes, and seal the EVMs after the poll.',
-    category: 'Polling Day'
+    answer:
+      'The Presiding Officer is in charge of a single polling station. They supervise the entire voting process, ensure secrecy, handle challenges/tendered votes, and seal the EVMs after the poll.',
+    category: 'Polling Day',
   },
   {
     id: 'faq-returning-officer-role',
     question: 'What is the role of the Returning Officer (RO)?',
-    answer: 'The RO is responsible for the conduct of elections in a specific constituency. They receive nominations, scrutinize them, manage the polling personnel, and declare the final result after counting.',
-    category: 'Election Rules'
+    answer:
+      'The RO is responsible for the conduct of elections in a specific constituency. They receive nominations, scrutinize them, manage the polling personnel, and declare the final result after counting.',
+    category: 'Election Rules',
   },
   {
     id: 'faq-voter-id-digilocker',
     question: 'Is e-EPIC on DigiLocker valid?',
-    answer: 'Yes, the digital version of your Voter ID (e-EPIC) downloaded from NVSP or accessed via DigiLocker is an officially valid identity document for voting, provided your name is in the roll.',
-    category: 'Digital Tools'
+    answer:
+      'Yes, the digital version of your Voter ID (e-EPIC) downloaded from NVSP or accessed via DigiLocker is an officially valid identity document for voting, provided your name is in the roll.',
+    category: 'Digital Tools',
   },
   {
     id: 'faq-voter-id-photo-change',
     question: 'Can I change my photo on the Voter ID?',
-    answer: 'Yes. Use Form 8 for "Correction of entries" on the NVSP portal or Voter Helpline App. You can upload a new passport-size photograph to update the image on your EPIC.',
-    category: 'Registration'
+    answer:
+      'Yes. Use Form 8 for "Correction of entries" on the NVSP portal or Voter Helpline App. You can upload a new passport-size photograph to update the image on your EPIC.',
+    category: 'Registration',
   },
   {
     id: 'faq-compulsory-voting',
     question: 'Is voting compulsory in India?',
-    answer: 'No, voting is a democratic right but not a legal compulsion in India. However, the ECI actively encourages maximum participation through SVEEP (Systematic Voters\' Education and Electoral Participation) programs.',
-    category: 'Election Rules'
+    answer:
+      "No, voting is a democratic right but not a legal compulsion in India. However, the ECI actively encourages maximum participation through SVEEP (Systematic Voters' Education and Electoral Participation) programs.",
+    category: 'Election Rules',
   },
   {
     id: 'faq-voter-education-sveep',
     question: 'What is SVEEP?',
-    answer: 'SVEEP is the flagship program of the ECI for voter education and awareness. It aims to increase voter turnout and bridge gaps in registration through community outreach, media campaigns, and school programs.',
-    category: 'Digital Tools'
+    answer:
+      'SVEEP is the flagship program of the ECI for voter education and awareness. It aims to increase voter turnout and bridge gaps in registration through community outreach, media campaigns, and school programs.',
+    category: 'Digital Tools',
   },
   {
     id: 'faq-voter-id-smart-card',
     question: 'What is the new PVC Voter ID card?',
-    answer: 'The ECI has transitioned to high-quality PVC cards with security features like a hologram and ghost image. You can request a replacement for your old paper card using Form 8 (without any changes) or Form 001.',
-    category: 'Registration'
+    answer:
+      'The ECI has transitioned to high-quality PVC cards with security features like a hologram and ghost image. You can request a replacement for your old paper card using Form 8 (without any changes) or Form 001.',
+    category: 'Registration',
   },
   {
     id: 'faq-election-observer',
     question: 'Who are Election Observers?',
-    answer: 'Election Observers are senior civil servants (usually IAS/IRS) appointed by the ECI to oversee elections in a constituency. There are General, Expenditure, and Police observers to ensure fairness.',
-    category: 'Election Rules'
+    answer:
+      'Election Observers are senior civil servants (usually IAS/IRS) appointed by the ECI to oversee elections in a constituency. There are General, Expenditure, and Police observers to ensure fairness.',
+    category: 'Election Rules',
   },
   {
     id: 'faq-voter-id-aadhaar-link',
     question: 'Is linking Aadhaar to Voter ID mandatory?',
-    answer: 'The ECI encourages voluntary linking of Aadhaar with Voter ID (using Form 6B) to remove duplicate entries and strengthen the roll, but it is not mandatory for exercising your right to vote.',
-    category: 'Registration'
+    answer:
+      'The ECI encourages voluntary linking of Aadhaar with Voter ID (using Form 6B) to remove duplicate entries and strengthen the roll, but it is not mandatory for exercising your right to vote.',
+    category: 'Registration',
   },
   {
     id: 'faq-test-vote-meaning',
     question: 'What is a Test Vote?',
-    answer: 'If a voter claims the VVPAT showed a different symbol than the one they pressed, they can file a declaration. A "test vote" is conducted in front of agents. If the claim is false, the voter faces legal action (Rule 49MA).',
-    category: 'Polling Day'
+    answer:
+      'If a voter claims the VVPAT showed a different symbol than the one they pressed, they can file a declaration. A "test vote" is conducted in front of agents. If the claim is false, the voter faces legal action (Rule 49MA).',
+    category: 'Polling Day',
   },
   {
     id: 'faq-webcasting-booth',
     question: 'What is webcasting in polling stations?',
-    answer: 'The ECI uses live webcasting from sensitive polling stations to monitor the process in real-time at the District and State Election Offices, ensuring no booth capturing or irregularities occur.',
-    category: 'Polling Day'
+    answer:
+      'The ECI uses live webcasting from sensitive polling stations to monitor the process in real-time at the District and State Election Offices, ensuring no booth capturing or irregularities occur.',
+    category: 'Polling Day',
   },
 ] as const;
 
@@ -445,7 +485,6 @@ export function searchFaq(query: string): readonly FAQItem[] {
   }
   return ELECTION_FAQ.filter(
     (f) =>
-      f.question.toLowerCase().includes(normalised) ||
-      f.answer.toLowerCase().includes(normalised),
+      f.question.toLowerCase().includes(normalised) || f.answer.toLowerCase().includes(normalised),
   );
 }
