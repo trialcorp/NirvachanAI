@@ -31,9 +31,9 @@ export class EligibilityCheckerWidget {
   private render(): void {
     this.container.innerHTML = `
       <div class="card" style="margin-bottom: var(--space-6); border-left: 3px solid var(--green-india);">
-        <h3 style="color: var(--navy); margin-bottom: var(--space-2);">
+        <h2 style="color: var(--navy); margin-bottom: var(--space-2); font-size: var(--text-xl);">
           ✓ Quick Check: Are you eligible to vote?
-        </h3>
+        </h2>
         <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
           Enter your age to check your eligibility according to the Election Commission of India.
         </p>

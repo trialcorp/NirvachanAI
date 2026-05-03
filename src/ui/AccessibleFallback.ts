@@ -60,7 +60,7 @@ export class AccessibleFallback {
                 role="tab"
                 id="a11y-tab-${stage.id}"
                 aria-selected="${i === 0 ? 'true' : 'false'}"
-                aria-controls="a11y-panel-${stage.id}"
+                aria-controls="panel-${stage.id}"
                 tabindex="${i === 0 ? '0' : '-1'}"
                 data-stage-id="${stage.id}"
                 class="sr-only"
