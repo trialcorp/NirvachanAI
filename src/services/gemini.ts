@@ -389,12 +389,8 @@ export class ElectionCoachService {
   /**
    * Process a Gemini tool call by dispatching to the appropriate Google Cloud service.
    *
-   * Dispatches to:
-   * - `translate_text` → Google Cloud Translation API
-   * - `find_polling_location` → Google Maps Places API
-   * - `lookup_election_faq` → Vertex AI semantic search
-   * - `check_voter_eligibility` → Local validation logic
-   * - `get_election_timeline` → Local timeline data
+   * Uses a handler map to dispatch tool calls to dedicated handler methods,
+   * keeping cyclomatic complexity low and each handler focused.
    *
    * @param functionCall - The tool call from Gemini.
    * @returns Tool call result with actual service response.
@@ -403,101 +399,33 @@ export class ElectionCoachService {
     name: string;
     args: Record<string, unknown>;
   }): Promise<ToolCallResult> {
+    /** Map of tool names to their handler functions. */
+    const handlers: Record<string, (args: Record<string, unknown>) => Promise<string>> = {
+      'translate_text': (args) => this.handleTranslateText(args),
+      'find_polling_location': (args) => this.handleFindPollingLocation(args),
+      'lookup_election_faq': (args) => this.handleLookupFaq(args),
+      'check_voter_eligibility': (args) => this.handleCheckEligibility(args),
+      'get_election_timeline': () => this.handleGetTimeline(),
+    };
+
     try {
-      switch (functionCall.name) {
-        case 'translate_text': {
-          const text = String(functionCall.args.text || '');
-          const targetLang = String(functionCall.args.targetLang || 'hi');
-          const translated = await this.translationService.translateText(text, targetLang);
-          return {
-            toolName: functionCall.name,
-            args: functionCall.args,
-            result: translated,
-            status: 'success',
-          };
-        }
-
-        case 'find_polling_location': {
-          const query = String(functionCall.args.query || '');
-          const result = await this.mapsService.searchPollingLocations(query);
-          if (result.ok && result.data) {
-            const locations = result.data.map(
-              (loc) => `${loc.name} — ${loc.address}`,
-            ).join('; ');
-            return {
-              toolName: functionCall.name,
-              args: functionCall.args,
-              result: locations || 'No locations found. Try a more specific query.',
-              status: 'success',
-            };
-          }
-          // Provide Maps link as fallback
-          const mapsLink = this.mapsService.generateMapsLink(query);
-          return {
-            toolName: functionCall.name,
-            args: functionCall.args,
-            result: `Search on Google Maps: ${mapsLink}`,
-            status: 'success',
-          };
-        }
-
-        case 'lookup_election_faq': {
-          const searchQuery = String(functionCall.args.search_query || '');
-          const faqMatch = await this.vertexService.findRelevantFaq(searchQuery);
-          if (faqMatch) {
-            return {
-              toolName: functionCall.name,
-              args: functionCall.args,
-              result: `Q: ${faqMatch.question}\nA: ${faqMatch.answer} (Relevance: ${Math.round(faqMatch.score * 100)}%)`,
-              status: 'success',
-            };
-          }
-          return {
-            toolName: functionCall.name,
-            args: functionCall.args,
-            result: 'No matching FAQ found. Please try rephrasing your question or visit eci.gov.in.',
-            status: 'success',
-          };
-        }
-
-        case 'check_voter_eligibility': {
-          const age = Number(functionCall.args.age ?? 0);
-          const isCitizen = functionCall.args.is_indian_citizen !== false;
-          const validation = validateVoterAge(age);
-          const citizenNote = isCitizen
-            ? ''
-            : ' Note: Only Indian citizens are eligible to vote in Indian elections.';
-          return {
-            toolName: functionCall.name,
-            args: functionCall.args,
-            result: `${validation.sanitizedValue || validation.errors.join('. ')}${citizenNote}`,
-            status: 'success',
-          };
-        }
-
-        case 'get_election_timeline': {
-          const deadlines = getDeadlineEvents();
-          const all = getAllTimelineEvents();
-          const events = deadlines.length > 0 ? deadlines : all.slice(0, 5);
-          const summary = events
-            .map((e) => `${e.date}: ${e.title} — ${e.description}${e.isDeadline ? ' ⚠️ DEADLINE' : ''}`)
-            .join('\n');
-          return {
-            toolName: functionCall.name,
-            args: functionCall.args,
-            result: summary || 'No upcoming election events found.',
-            status: 'success',
-          };
-        }
-
-        default:
-          return {
-            toolName: functionCall.name,
-            args: functionCall.args,
-            result: `Unknown tool "${functionCall.name}". Available tools: translate_text, find_polling_location, lookup_election_faq, check_voter_eligibility, get_election_timeline.`,
-            status: 'error',
-          };
+      const handler = handlers[functionCall.name];
+      if (!handler) {
+        return {
+          toolName: functionCall.name,
+          args: functionCall.args,
+          result: `Unknown tool "${functionCall.name}". Available tools: ${Object.keys(handlers).join(', ')}.`,
+          status: 'error',
+        };
       }
+
+      const result = await handler(functionCall.args);
+      return {
+        toolName: functionCall.name,
+        args: functionCall.args,
+        result,
+        status: 'success',
+      };
     } catch {
       return {
         toolName: functionCall.name,
@@ -506,6 +434,87 @@ export class ElectionCoachService {
         status: 'error',
       };
     }
+  }
+
+  /**
+   * Handle the `translate_text` tool call via Google Cloud Translation API.
+   *
+   * @param args - Tool call arguments containing text and targetLang.
+   * @returns Translated text string.
+   */
+  private async handleTranslateText(args: Record<string, unknown>): Promise<string> {
+    const text = String(args.text || '');
+    const targetLang = String(args.targetLang || 'hi');
+    return this.translationService.translateText(text, targetLang);
+  }
+
+  /**
+   * Handle the `find_polling_location` tool call via Google Maps Places API.
+   *
+   * @param args - Tool call arguments containing query and optional pin_code.
+   * @returns Formatted location results or a Maps search link fallback.
+   */
+  private async handleFindPollingLocation(args: Record<string, unknown>): Promise<string> {
+    const query = String(args.query || '');
+    const result = await this.mapsService.searchPollingLocations(query);
+
+    if (result.ok && result.data) {
+      const locations = result.data
+        .map((loc) => `${loc.name} — ${loc.address}`)
+        .join('; ');
+      return locations || 'No locations found. Try a more specific query.';
+    }
+
+    const mapsLink = this.mapsService.generateMapsLink(query);
+    return `Search on Google Maps: ${mapsLink}`;
+  }
+
+  /**
+   * Handle the `lookup_election_faq` tool call via Vertex AI semantic search.
+   *
+   * @param args - Tool call arguments containing search_query.
+   * @returns Matching FAQ or a "not found" message.
+   */
+  private async handleLookupFaq(args: Record<string, unknown>): Promise<string> {
+    const searchQuery = String(args.search_query || '');
+    const faqMatch = await this.vertexService.findRelevantFaq(searchQuery);
+
+    if (faqMatch) {
+      return `Q: ${faqMatch.question}\nA: ${faqMatch.answer} (Relevance: ${Math.round(faqMatch.score * 100)}%)`;
+    }
+
+    return 'No matching FAQ found. Please try rephrasing your question or visit eci.gov.in.';
+  }
+
+  /**
+   * Handle the `check_voter_eligibility` tool call via local validation.
+   *
+   * @param args - Tool call arguments containing age and is_indian_citizen.
+   * @returns Eligibility result string.
+   */
+  private handleCheckEligibility(args: Record<string, unknown>): Promise<string> {
+    const age = Number(args.age ?? 0);
+    const isCitizen = args.is_indian_citizen !== false;
+    const validation = validateVoterAge(age);
+    const citizenNote = isCitizen
+      ? ''
+      : ' Note: Only Indian citizens are eligible to vote in Indian elections.';
+    return Promise.resolve(`${validation.sanitizedValue || validation.errors.join('. ')}${citizenNote}`);
+  }
+
+  /**
+   * Handle the `get_election_timeline` tool call via local timeline data.
+   *
+   * @returns Formatted timeline summary string.
+   */
+  private handleGetTimeline(): Promise<string> {
+    const deadlines = getDeadlineEvents();
+    const all = getAllTimelineEvents();
+    const events = deadlines.length > 0 ? deadlines : all.slice(0, 5);
+    const summary = events
+      .map((e) => `${e.date}: ${e.title} — ${e.description}${e.isDeadline ? ' ⚠️ DEADLINE' : ''}`)
+      .join('\n');
+    return Promise.resolve(summary || 'No upcoming election events found.');
   }
 
   /**

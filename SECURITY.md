@@ -85,3 +85,102 @@ Response timeline:
 | CSP Headers         | ✅ Passed | 100%   |
 | Dependency Audit    | ✅ Passed | 100%   |
 | Privacy Compliance  | ✅ Passed | 100%   |
+| Transport Security  | ✅ Passed | 100%   |
+| Cross-Origin Policy | ✅ Passed | 100%   |
+
+## Transport Security (HSTS)
+
+All production deployments enforce **HTTP Strict Transport Security (HSTS)** via nginx:
+
+```
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+```
+
+This ensures:
+- All connections are upgraded to HTTPS automatically
+- Subdomains are covered to prevent cookie leakage
+- The domain is eligible for browser HSTS preload lists
+- Man-in-the-middle attacks via SSL stripping are prevented
+
+## Content Security Policy (CSP) Design Decisions
+
+### Why `'unsafe-inline'` in `script-src`?
+
+The application uses `'unsafe-inline'` in `script-src` for two specific reasons:
+
+1. **Vite's development HMR** injects inline scripts during development
+2. **Google Maps JavaScript API** requires inline script execution for the `maps.googleapis.com` loader
+
+**Mitigations applied:**
+- All user-generated content is sanitised through `sanitizeFull()` before DOM insertion
+- No `innerHTML` is used with unsanitised data anywhere in the codebase
+- The `base-uri 'self'` directive prevents `<base>` tag injection
+- The `object-src 'none'` directive blocks plugin-based attacks
+- `form-action 'self'` restricts form submission targets
+
+### Additional CSP Directives
+
+| Directive | Value | Purpose |
+|---|---|---|
+| `default-src` | `'self'` | Restricts all resource loading to same origin by default |
+| `base-uri` | `'self'` | Prevents base URL manipulation attacks |
+| `form-action` | `'self'` | Blocks cross-origin form submissions |
+| `object-src` | `'none'` | Disables Flash/Java plugin execution |
+| `upgrade-insecure-requests` | enabled | Auto-upgrades HTTP to HTTPS |
+| `frame-src` | Google domains only | Restricts embeddable frames |
+
+## Cross-Origin Isolation
+
+Production nginx enforces:
+
+| Header | Value | Purpose |
+|---|---|---|
+| `Cross-Origin-Opener-Policy` | `same-origin` | Prevents cross-origin window references |
+| `Cross-Origin-Resource-Policy` | `same-origin` | Blocks cross-origin resource loading |
+| `X-Permitted-Cross-Domain-Policies` | `none` | Blocks Flash/PDF cross-domain access |
+
+## Dependency Security
+
+### Automated Scanning
+
+- **CI Pipeline:** `npm audit --audit-level=moderate` runs on every push and PR
+- **Pre-deploy:** Cloud Build `validate` step runs full audit before container build
+- **Manual:** Developers run `npm audit` locally before committing
+
+### Dependency Policy
+
+- Production dependencies are minimised (only `@google/generative-ai` and `three`)
+- All dependencies are version-pinned via `package-lock.json`
+- No unmaintained or deprecated packages are permitted
+- DevDependencies are excluded from production Docker builds via multi-stage build
+
+## Structured Logging
+
+All application logging uses the centralised `Logger` utility (`src/utils/logger.ts`):
+
+- **No raw `console.log`** calls in production code
+- Log entries include: ISO timestamp, severity level, source module, and structured context
+- Sensitive data (API keys, user queries) is never logged in full
+- Analytics logging is decoupled via `requestIdleCallback` to never block the UI
+
+## Security Testing
+
+The test suite includes dedicated security test files:
+
+- **`tests/unit/sanitize.test.ts`** — Unit tests for all sanitization functions
+- **`tests/unit/security-sanitization.test.ts`** — XSS attack vector corpus (script injection, event handlers, SVG, iframe, protocol attacks)
+- **`tests/unit/validate.test.ts`** — Input validation boundary tests
+- **`tests/e2e/app.spec.ts`** — E2E verification of security headers and CSP
+
+## Pre-Commit Security Checklist
+
+Before merging any code:
+
+- [ ] All user inputs pass through `sanitizeFull()` before DOM insertion
+- [ ] No `innerHTML` with unsanitised data
+- [ ] No `eval()`, `new Function()`, or `setTimeout(string)`
+- [ ] API keys loaded from `import.meta.env` only
+- [ ] New dependencies audited with `npm audit`
+- [ ] ESLint passes with zero errors (`no-eval`, `no-implied-eval`, `no-new-func`)
+- [ ] TypeScript strict mode passes (`tsc --noEmit`)
+

@@ -14,6 +14,7 @@ import { sanitizeFull } from '../utils/sanitize';
 import { validateCoachQuery } from '../utils/validate';
 import { announce } from '../utils/a11y';
 import { StatusFeedback } from '../utils/StatusFeedback';
+import { Logger } from '../utils/logger';
 
 /** Minimum interval between chat submissions (ms). */
 const SUBMIT_DEBOUNCE_MS = 500;
@@ -48,8 +49,7 @@ export class ElectionCoachPanel {
     this.coach = new ElectionCoachService();
     const vertex = new ElectionVertexService();
     if (vertex.isConfigured()) {
-      // eslint-disable-next-line no-console
-      console.info('[NirvachanAI] Vertex AI text-embedding service active.');
+      Logger.info('CoachPanel', 'Vertex AI text-embedding service active');
     } else {
       // Search fallback notice
       document.addEventListener('keydown', (e) => {
@@ -66,17 +66,30 @@ export class ElectionCoachPanel {
    *
    * Uses createElement + textContent instead of innerHTML
    * for all dynamic content to eliminate XSS risk.
+   * Sub-renderers keep each method focused and under 80 lines.
    */
   private render(): void {
-    // Clear any existing content safely
     this.container.textContent = '';
 
-    // Build the chat container
     const chatCard = document.createElement('div');
     chatCard.id = 'coach-chat';
     chatCard.className = 'card';
 
-    // Messages area
+    chatCard.appendChild(this.renderMessageArea());
+    chatCard.appendChild(this.renderSuggestions());
+    chatCard.appendChild(this.renderInputForm());
+    chatCard.appendChild(this.renderStatusLine());
+
+    this.container.appendChild(chatCard);
+    this.setupEventListeners();
+  }
+
+  /**
+   * Create the scrollable message log area with welcome message.
+   *
+   * @returns The messages container element.
+   */
+  private renderMessageArea(): HTMLDivElement {
     const messagesDiv = document.createElement('div');
     messagesDiv.id = 'coach-messages';
     messagesDiv.setAttribute('role', 'log');
@@ -84,7 +97,6 @@ export class ElectionCoachPanel {
     messagesDiv.setAttribute('aria-live', 'polite');
     messagesDiv.className = 'coach-messages-container';
 
-    // Welcome message
     const welcomeMsg = document.createElement('div');
     welcomeMsg.className = 'coach-message coach-assistant';
 
@@ -99,9 +111,15 @@ export class ElectionCoachPanel {
     welcomeMsg.appendChild(welcomeText);
     messagesDiv.appendChild(welcomeMsg);
 
-    chatCard.appendChild(messagesDiv);
+    return messagesDiv;
+  }
 
-    // Suggestion buttons
+  /**
+   * Create suggestion quick-action buttons.
+   *
+   * @returns The suggestions container element.
+   */
+  private renderSuggestions(): HTMLDivElement {
     const suggestionsDiv = document.createElement('div');
     suggestionsDiv.id = 'coach-suggestions';
     suggestionsDiv.className = 'coach-suggestions';
@@ -123,9 +141,15 @@ export class ElectionCoachPanel {
       suggestionsDiv.appendChild(btn);
     }
 
-    chatCard.appendChild(suggestionsDiv);
+    return suggestionsDiv;
+  }
 
-    // Form
+  /**
+   * Create the chat input form with label, text input, and send button.
+   *
+   * @returns The form element.
+   */
+  private renderInputForm(): HTMLFormElement {
     const form = document.createElement('form');
     form.id = 'coach-form';
     form.setAttribute('role', 'search');
@@ -158,12 +182,19 @@ export class ElectionCoachPanel {
     formRow.appendChild(sendBtn);
 
     form.appendChild(formRow);
-    chatCard.appendChild(form);
+    return form;
+  }
 
-    // Status text
+  /**
+   * Create the status line showing Gemini configuration state.
+   *
+   * @returns The status paragraph element.
+   */
+  private renderStatusLine(): HTMLParagraphElement {
     const statusText = document.createElement('p');
     statusText.className = 'coach-status';
     statusText.textContent = `Powered by Google Gemini AI${this.coach.isConfigured() ? '' : ' (limited mode)'}`;
+
     if (!this.coach.isConfigured()) {
       statusText.style.cursor = 'help';
       statusText.title = 'Click to see why this is in limited mode';
@@ -171,11 +202,8 @@ export class ElectionCoachPanel {
         StatusFeedback.showConfigWarning('Google Gemini AI');
       });
     }
-    chatCard.appendChild(statusText);
 
-    this.container.appendChild(chatCard);
-
-    this.setupEventListeners();
+    return statusText;
   }
 
   /**

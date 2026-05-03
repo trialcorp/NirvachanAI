@@ -26,6 +26,7 @@ import { ElectionVertexService } from './services/vertex';
 import { StatusFeedback } from './utils/StatusFeedback';
 import { store } from './state/store';
 import { announce, onReducedMotionChange, prefersReducedMotion } from './utils/a11y';
+import { Logger } from './utils/logger';
 
 /** Track initialised modules for cleanup. */
 let scene: ElectionScene | null = null;
@@ -50,8 +51,7 @@ function bootstrap(): void {
   try {
     new AccessibleFallback();
   } catch (e) {
-    // eslint-disable-next-line no-console
-    console.warn('[ElectionSaathi] Accessible fallback failed to initialise:', e);
+    Logger.warn('main', 'Accessible fallback failed to initialise', e);
   }
 
   init3DScene(appContainer);
@@ -70,8 +70,7 @@ function init3DScene(appContainer: HTMLElement): void {
       scene = new ElectionScene(appContainer);
       store.setState({ is3DEnabled: true });
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn('[ElectionSaathi] 3D scene failed to initialise:', e);
+      Logger.warn('main', '3D scene failed to initialise', e);
       store.setState({ is3DEnabled: false });
       appContainer.setAttribute('aria-hidden', 'true');
     }
@@ -98,8 +97,7 @@ function initWidgets(): void {
     try {
       new constructor();
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(`[ElectionSaathi] ${name} failed:`, e);
+      Logger.warn('main', `${name} failed`, e);
     }
   }
 }
@@ -111,19 +109,16 @@ function initCloudServices(): void {
   try {
     const analytics = new ElectionAnalyticsService();
     if (analytics.isConfigured()) {
-      // eslint-disable-next-line no-console
-      console.info('[ElectionSaathi] Google Cloud Analytics (NL API + Firestore) active.');
+      Logger.info('main', 'Google Cloud Analytics (NL API + Firestore) active');
     }
   } catch (e) {
-    // eslint-disable-next-line no-console
-    console.warn('[ElectionSaathi] Analytics service failed:', e);
+    Logger.warn('main', 'Analytics service failed', e);
   }
 
   try {
     const vertex = new ElectionVertexService();
     if (vertex.isConfigured()) {
-      // eslint-disable-next-line no-console
-      console.info('[NirvachanAI] Vertex AI text-embedding service active.');
+      Logger.info('main', 'Vertex AI text-embedding service active');
     } else {
       // Search fallback notice
       document.addEventListener('keydown', (e) => {
@@ -133,8 +128,7 @@ function initCloudServices(): void {
       });
     }
   } catch (e) {
-    // eslint-disable-next-line no-console
-    console.warn('[ElectionSaathi] Vertex AI service failed:', e);
+    Logger.warn('main', 'Vertex AI service failed', e);
   }
 }
 

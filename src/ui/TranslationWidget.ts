@@ -113,7 +113,9 @@ export class TranslationWidget {
       StatusFeedback.showConfigWarning('Google Cloud Translation API');
       // Reset selector to English
       const select = document.getElementById('lang-select') as HTMLSelectElement | null;
-      if (select) select.value = 'en';
+      if (select) {
+        select.value = 'en';
+      }
       return;
     }
 

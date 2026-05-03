@@ -33,6 +33,8 @@ export default defineConfig({
       'X-Content-Type-Options': 'nosniff',
       'X-Frame-Options': 'DENY',
       'Referrer-Policy': 'strict-origin-when-cross-origin',
+      'X-Permitted-Cross-Domain-Policies': 'none',
+      'Permissions-Policy': 'geolocation=(self), camera=(), microphone=()',
     },
   },
   preview: {

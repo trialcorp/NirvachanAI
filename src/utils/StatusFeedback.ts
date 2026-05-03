@@ -12,7 +12,9 @@ export class StatusFeedback {
    * Initialise the notification container in the DOM.
    */
   private static ensureContainer(): HTMLDivElement {
-    if (this.container) return this.container;
+    if (this.container) {
+      return this.container;
+    }
 
     this.container = document.createElement('div');
     this.container.id = 'status-feedback-container';
@@ -72,7 +74,9 @@ export class StatusFeedback {
     help.href = helpUrl || '#';
     help.style.cssText = 'font-size: 0.75rem; color: #ff9f43; text-decoration: underline; font-weight: 600; opacity: 0.8;';
     help.textContent = helpUrl ? 'Learn how to configure it' : 'Check .env.example for setup';
-    if (!helpUrl) help.style.pointerEvents = 'none';
+    if (!helpUrl) {
+      help.style.pointerEvents = 'none';
+    }
 
     toast.appendChild(header);
     toast.appendChild(message);
