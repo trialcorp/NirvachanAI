@@ -82,7 +82,24 @@ export class StatusFeedback {
     const header = document.createElement('div');
     header.style.cssText =
       'display: flex; align-items: center; gap: var(--space-2); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: #ff9f43;';
-    header.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01"/></svg> SERVICE UNAVAILABLE`;
+
+    // Safe SVG construction
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', '16');
+    svg.setAttribute('height', '16');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '2.5');
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01');
+
+    svg.appendChild(path);
+    header.appendChild(svg);
+
+    const titleText = document.createTextNode(' SERVICE UNAVAILABLE');
+    header.appendChild(titleText);
 
     const message = document.createElement('div');
     message.style.cssText =

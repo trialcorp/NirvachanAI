@@ -11,6 +11,29 @@ import { describe, it, expect, vi, afterEach } from 'vitest';
 import { ElectionAnalyticsService } from '../../src/services/analytics';
 import { ElectionVertexService } from '../../src/services/vertex';
 
+import { Logger } from '../../src/utils/logger';
+
+describe('Logger — Console Coverage', () => {
+  it('should call console.warn and console.error correctly', () => {
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    Logger.error('Test', 'Error msg');
+    Logger.warn('Test', 'Warn msg');
+    expect(errorSpy).toHaveBeenCalled();
+    expect(warnSpy).toHaveBeenCalled();
+    errorSpy.mockRestore();
+    warnSpy.mockRestore();
+  });
+
+  it('should call console.info for INFO and DEBUG levels', () => {
+    const spy = vi.spyOn(console, 'info').mockImplementation(() => {});
+    Logger.info('Test', 'Info msg');
+    Logger.debug('Test', 'Debug msg');
+    expect(spy).toHaveBeenCalledTimes(2);
+    spy.mockRestore();
+  });
+});
+
 /* ---- Analytics Service Tests ---- */
 
 describe('ElectionAnalyticsService', () => {
