@@ -16,6 +16,23 @@ export class StatusFeedback {
       return this.container;
     }
 
+    // Inject animation styles lazily (only when first needed)
+    if (!document.getElementById('status-feedback-styles')) {
+      const style = document.createElement('style');
+      style.id = 'status-feedback-styles';
+      style.textContent = `
+        @keyframes toast-in {
+          from { transform: translateX(100%) translateY(0); opacity: 0; }
+          to { transform: translateX(0) translateY(0); opacity: 1; }
+        }
+        @keyframes toast-out {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(100%); opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
     this.container = document.createElement('div');
     this.container.id = 'status-feedback-container';
     this.container.style.cssText = `
@@ -92,21 +109,4 @@ export class StatusFeedback {
       setTimeout(() => toast.remove(), 500);
     }, 6000);
   }
-}
-
-// Add animation styles if not present
-if (!document.getElementById('status-feedback-styles')) {
-  const style = document.createElement('style');
-  style.id = 'status-feedback-styles';
-  style.textContent = `
-    @keyframes toast-in {
-      from { transform: translateX(100%) translateY(0); opacity: 0; }
-      to { transform: translateX(0) translateY(0); opacity: 1; }
-    }
-    @keyframes toast-out {
-      from { transform: translateX(0); opacity: 1; }
-      to { transform: translateX(100%); opacity: 0; }
-    }
-  `;
-  document.head.appendChild(style);
 }

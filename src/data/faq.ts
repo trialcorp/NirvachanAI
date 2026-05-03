@@ -189,7 +189,7 @@ export const ELECTION_FAQ: readonly FAQItem[] = [
     category: 'Polling Day',
   },
   {
-    id: 'faq-voter-id-lost',
+    id: 'faq-voter-id-lost-replacement',
     question: 'What to do if I lost my Voter ID card?',
     answer:
       'If your Voter ID is lost, you can apply for a replacement (Form 001) online via the Voter Helpline App or NVSP. You can also vote using other approved IDs like Aadhaar or Passport if your name is in the current electoral roll.',

@@ -95,7 +95,7 @@ export class ElectionTranslationService {
    * Initialize the Cloud Translation Service.
    */
   constructor() {
-    this.apiKey = String(import.meta.env.VITE_GOOGLE_TRANSLATION_API_KEY || '');
+    this.apiKey = String(import.meta.env['VITE_GOOGLE_TRANSLATION_API_KEY'] || '');
 
     this.client = new SafeApiClient({
       baseUrl: TRANSLATION_API_BASE,

@@ -9,12 +9,10 @@
  */
 
 import { ElectionCoachService } from '../services/gemini';
-import { ElectionVertexService } from '../services/vertex';
 import { sanitizeFull } from '../utils/sanitize';
 import { validateCoachQuery } from '../utils/validate';
-import { announce } from '../utils/a11y';
+import { announce, generateA11yId } from '../utils/a11y';
 import { StatusFeedback } from '../utils/StatusFeedback';
-import { Logger } from '../utils/logger';
 
 /** Minimum interval between chat submissions (ms). */
 const SUBMIT_DEBOUNCE_MS = 500;
@@ -47,17 +45,6 @@ export class ElectionCoachPanel {
     }
     this.container = el;
     this.coach = new ElectionCoachService();
-    const vertex = new ElectionVertexService();
-    if (vertex.isConfigured()) {
-      Logger.info('CoachPanel', 'Vertex AI text-embedding service active');
-    } else {
-      // Search fallback notice
-      document.addEventListener('keydown', (e) => {
-        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-          StatusFeedback.showConfigWarning('Google Vertex AI');
-        }
-      });
-    }
     this.render();
   }
 
@@ -325,7 +312,7 @@ export class ElectionCoachPanel {
       return '';
     }
 
-    const id = `msg-${Date.now()}`;
+    const id = generateA11yId('msg');
     const div = document.createElement('div');
     div.id = id;
     div.className = `coach-message coach-${role}`;
